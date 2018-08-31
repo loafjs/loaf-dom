@@ -1,0 +1,21 @@
+{
+  "name": "loaf-dom",
+  "version": "0.0.1",
+  "description": "dom script library",
+  "main": "loaf-dom.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loafjs/loaf-dom.git"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "keywords": ["util"],
+  "author": "falsy",
+  "license": "WTFPL",
+  "bugs": "https://github.com/loafjs/loaf-dom/issues",
+  "homepage": "https://falsy.me"
+}
