@@ -3,13 +3,16 @@ DOM Script Library
 
 ## ChangeLog
 
+#### v0.0.4
+* modify a typo
+
 #### v0.0.3
 * add sample code
-* add selecter(tagName)
+* add selector(tagName)
 * edit structure
 
 #### v0.0.2
-* selecter
+* selector
 * eq
 * addClass
 * removeClass
