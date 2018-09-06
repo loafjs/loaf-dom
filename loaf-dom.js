@@ -1,41 +1,62 @@
 class LoafDom {
+
 	constructor(element) {
-		this.element = '';
+		this._select(element);
+	}
+
+	_select(element) {
 		if(typeof element === 'string') {
-			if(element[0] === '#') {
-				this.element = document.getElementById(element.substring(1));
-			}
-			if(element[0] === '.') {
-				this.element = document.getElementsByClassName(element.substring(1));
+			switch(element[0]) {
+				case '#' :
+					this.element = document.getElementById(element.substring(1));
+					break;
+				case '.' :
+					this.element = document.getElementsByClassName(element.substring(1));
+					break;
+				default :
+					this.element = document.getElementsByTagName(element);
 			}
 		}
 	}
 
-	roof(array, fnc) {
-		const len = array.length;
+	_oneSelect() {
+		return this.element.length > 0 ? this.element[0] : this.element;
+	}
+
+	_roof(arr, fnc) {
+		const len = arr.length;
 		let i;
 		for(i=0; i<len; i++) {
 			fnc(i);
 		}
 	}
 
-	eq(index) {
-		this.element = this.element[index];
+	_compactSplit(str, value) {
+		return str.split(value).filter(Boolean);
+	}
+
+	eq(idx) {
+		this.element = this.element[idx];
 		return this;
 	}
 
-	addClass(className) {
-		this.element.className += ' ' + className;
+	addClass(...className) {
+		const El = this._oneSelect();
+		El.className = this._compactSplit(El.className, ' ').concat(...className).join(' ');
 		return this;
 	}
 
 	removeClass(className) {
-		const regClassName = new RegExp(className, 'g');
-		this.roof(this.element, () => {
-			this.element[0].className = this.element[0].className.replace(regClassName, '');
+		const arrayClassName = this._compactSplit(className, ' ');
+		this._roof(this.element, (i) => {
+			const El = this.element[i];
+			El.className = this._compactSplit(El.className, ' ').filter((str) => arrayClassName.indexOf(str) === -1).join(' ');
 		});
 		return this;
 	}
+
 }
 
-export default LoafDom;
+export default (element) => {
+	return new LoafDom(element);
+}
