@@ -9,7 +9,7 @@ L('.color').removeClass('color-red');
 L('.color').removeClass('color');
 
 // eq
-L('.color').eq(2).addClass('eq2-add-class');
+L('p').eq(2).addClass('eq2-add-class');
 
 // set attr
 L('#content').attr('new-attr', 'attrValue');
