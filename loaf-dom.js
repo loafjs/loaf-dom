@@ -1,6 +1,7 @@
 class LoafDom {
 
 	constructor(element) {
+		this.version = '0.0.6';
 		this._select(element);
 	}
 
@@ -48,7 +49,16 @@ class LoafDom {
 
 	removeClass(className) {
 		const arrayClassName = this._compactSplit(className, ' ');
+		let baseElementLen = this.element.length;
+		let leftIdx = 0;
 		this._roof(this.element, (i) => {
+			const newLen = this.element.length;
+			if(baseElementLen > newLen) {
+				leftIdx += 1;
+				i -= leftIdx;
+				baseElementLen = newLen;
+			}
+
 			const El = this.element[i];
 			El.className = this._compactSplit(El.className, ' ').filter((str) => arrayClassName.indexOf(str) === -1).join(' ');
 		});

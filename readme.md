@@ -3,6 +3,9 @@ DOM Script Library
 
 ## ChangeLog
 
+#### v0.0.6
+* removeClass selector Error correction
+
 #### v0.0.4
 * modify a typo
 
