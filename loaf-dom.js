@@ -1,4 +1,4 @@
-// version. 0.0.7
+// version. 0.0.8
 
 class LoafDom {
 
@@ -74,9 +74,8 @@ class LoafDom {
 	}
 
 	attr(key, value = false) {
-		const el = this._oneSelect();
-		if(value) el.setAttribute(key, value);
-		else return el.getAttribute(key);
+		if(!value) return this._oneSelect().getAttribute(key);
+		this._oneSelect().setAttribute(key, value);
 		return this;
 	}
 
@@ -85,6 +84,7 @@ class LoafDom {
 		this._roof(this.element, (i) => {
 			this.element[i].style[key] = value;
 		});
+		return this;
 	}
 
 }

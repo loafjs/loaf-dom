@@ -3,6 +3,9 @@ DOM Script Library
 
 ## ChangeLog
 
+#### v0.0.8
+* code cleanup
+
 #### v0.0.7
 * add attr()
 * add style()
