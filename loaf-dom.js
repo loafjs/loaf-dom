@@ -1,23 +1,40 @@
+// version. 0.0.7
+
 class LoafDom {
 
 	constructor(element) {
-		this.version = '0.0.6';
-		this._select(element);
+		this.element = [];
+		this._multiSelector(element);
+	}
+
+	_multiSelector(element) {
+		if(typeof element === 'string') {
+			const el = element.split(',');
+			el.forEach((selectName) => {
+				const select = this._select(selectName.trim());
+				if(select.length) {
+					this._roof(select, (i) => {
+						this.element = Array.prototype.concat.call(this.element, select[i]);
+					});
+				} else {
+					this.element = Array.prototype.concat.call(this.element, select);
+				}
+			});
+		}
 	}
 
 	_select(element) {
-		if(typeof element === 'string') {
-			switch(element[0]) {
-				case '#' :
-					this.element = document.getElementById(element.substring(1));
-					break;
-				case '.' :
-					this.element = document.getElementsByClassName(element.substring(1));
-					break;
-				default :
-					this.element = document.getElementsByTagName(element);
-			}
+		switch(element[0]) {
+			case '#' :
+				element = document.getElementById(element.substring(1));
+				break;
+			case '.' :
+				element = document.getElementsByClassName(element.substring(1));
+				break;
+			default :
+				element = document.getElementsByTagName(element);
 		}
+		return element;
 	}
 
 	_oneSelect() {
@@ -42,27 +59,32 @@ class LoafDom {
 	}
 
 	addClass(...className) {
-		const El = this._oneSelect();
-		El.className = this._compactSplit(El.className, ' ').concat(...className).join(' ');
+		const el = this._oneSelect();
+		el.className = this._compactSplit(el.className, ' ').concat(...className).join(' ');
 		return this;
 	}
 
 	removeClass(className) {
 		const arrayClassName = this._compactSplit(className, ' ');
-		let baseElementLen = this.element.length;
-		let leftIdx = 0;
 		this._roof(this.element, (i) => {
-			const newLen = this.element.length;
-			if(baseElementLen > newLen) {
-				leftIdx += 1;
-				i -= leftIdx;
-				baseElementLen = newLen;
-			}
-
-			const El = this.element[i];
-			El.className = this._compactSplit(El.className, ' ').filter((str) => arrayClassName.indexOf(str) === -1).join(' ');
+			const el = this.element[i];
+			el.className = this._compactSplit(el.className, ' ').filter((str) => arrayClassName.indexOf(str) === -1).join(' ');
 		});
 		return this;
+	}
+
+	attr(key, value = false) {
+		const el = this._oneSelect();
+		if(value) el.setAttribute(key, value);
+		else return el.getAttribute(key);
+		return this;
+	}
+
+	style(key, value = false) {
+		if(!value) return this._oneSelect().style[key];
+		this._roof(this.element, (i) => {
+			this.element[i].style[key] = value;
+		});
 	}
 
 }

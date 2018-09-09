@@ -3,6 +3,11 @@ DOM Script Library
 
 ## ChangeLog
 
+#### v0.0.7
+* add attr()
+* add style()
+* add multiple selectors
+
 #### v0.0.6
 * removeClass selector Error correction
 
@@ -16,9 +21,9 @@ DOM Script Library
 
 #### v0.0.2
 * selector
-* eq
-* addClass
-* removeClass
+* eq()
+* addClass()
+* removeClass()
 
 #### v0.0.1
 * init
