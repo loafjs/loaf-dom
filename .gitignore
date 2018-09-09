@@ -8,3 +8,4 @@ npm-debug.log
 logs
 *.log
 sample/src/loaf-dom.js
+package-lock.json
