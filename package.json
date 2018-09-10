@@ -1,6 +1,6 @@
 {
   "name": "loaf-dom",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "dom script library",
   "main": "loaf-dom.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "https://github.com/loafjs/loaf-dom.git"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.0.0"
   },
   "keywords": ["util"],
   "author": "falsy",
