@@ -1,4 +1,4 @@
-// version. 0.0.9
+// version. in progress.. 0.0.10
 
 class LoafDom {
 
@@ -7,18 +7,34 @@ class LoafDom {
 		this._multiSelector(element);
 	}
 
+	_inheritSelector(selector) {
+		const el = selector.split(' '); // dev p
+		const len = el.length;
+		if(len === 1) {
+			const select = this._select(el[0]);
+			if(select.length) {
+				this._roof(select, (i) => {
+					this.element = Array.prototype.concat.call(this.element, select[i]);
+				});
+			} else {
+				this.element = Array.prototype.concat.call(this.element, select);
+			}
+		}
+		if(len > 1) {
+			let parentCache = {};
+			this._roof(el, (i) => {
+				parentCache[i] = this._select(el[i]);
+				this._roof()
+			});
+		}
+	}
+
 	_multiSelector(element) {
 		if(typeof element === 'string') {
 			const el = element.split(',');
-			el.forEach((selectName) => {
-				const select = this._select(selectName.trim());
-				if(select.length) {
-					this._roof(select, (i) => {
-						this.element = Array.prototype.concat.call(this.element, select[i]);
-					});
-				} else {
-					this.element = Array.prototype.concat.call(this.element, select);
-				}
+			el.forEach((selectorStr) => {
+				const trimSelector = selectorStr.trim();
+				this._inheritSelector(trimSelector);
 			});
 		}
 	}
