@@ -8,25 +8,44 @@ class LoafDom {
 	}
 
 	_inheritSelector(selector) {
-		const el = selector.split(' '); // dev p
-		const len = el.length;
-		if(len === 1) {
-			const select = this._select(el[0]);
-			if(select.length) {
-				this._roof(select, (i) => {
-					this.element = Array.prototype.concat.call(this.element, select[i]);
-				});
-			} else {
-				this.element = Array.prototype.concat.call(this.element, select);
-			}
-		}
+		const el = selector.split(' ');
+		const len = el.length
+
+		if(len === 1) return this.element = this._arrayElement(this.element, el[0]);
+
 		if(len > 1) {
-			let parentCache = {};
-			this._roof(el, (i) => {
-				parentCache[i] = this._select(el[i]);
-				this._roof()
+			let cacheParent;
+			this._roof(len-1, (i) => {
+				const parent = this._arrayElement([], el[len-2-i]); // [div]
+				const children = typeof cacheParent === 'undefined' ? this._arrayElement([], el[len-1-i]) : cacheParent; // [p, p, p]
+				this._roof(children.length, (i) => {
+					cacheParent = this._findInParents(parent, children[i]);
+				});
+				// ing..
+				if(cacheParent) return this.element = this._arrayElement(this.element, el[len-1]);
 			});
 		}
+	}
+
+	_findInParents(parent, children) {
+		let cacheParent = children.parentNode;
+		while(cacheParent !== null) {
+			if(parent.indexOf(cacheParent) !== -1) return cacheParent;
+			cacheParent = cacheParent.parentNode;
+		}
+		return null;
+	}
+
+	_arrayElement(store, element) {
+		const select = this._select(element);
+		if(select.length) {
+			this._roof(select.length, (i) => {
+				store = Array.prototype.concat.call(store, select[i]);
+			});
+		} else {
+			store = Array.prototype.concat.call(store, select);
+		}
+		return store;
 	}
 
 	_multiSelector(element) {
@@ -57,8 +76,7 @@ class LoafDom {
 		return this.element.length > 0 ? this.element[0] : this.element;
 	}
 
-	_roof(arr, fnc) {
-		const len = arr.length;
+	_roof(len, fnc) {
 		let i;
 		for(i=0; i<len; i++) {
 			fnc(i);
@@ -82,7 +100,7 @@ class LoafDom {
 
 	removeClass(className) {
 		const arrayClassName = this._compactSplit(className, ' ');
-		this._roof(this.element, (i) => {
+		this._roof(this.element.length, (i) => {
 			const el = this.element[i];
 			el.className = this._compactSplit(el.className, ' ').filter((str) => arrayClassName.indexOf(str) === -1).join(' ');
 		});
@@ -97,7 +115,7 @@ class LoafDom {
 
 	style(key, value = false) {
 		if(!value) return this._oneSelect().style[key];
-		this._roof(this.element, (i) => {
+		this._roof(this.element.length, (i) => {
 			this.element[i].style[key] = value;
 		});
 		return this;
