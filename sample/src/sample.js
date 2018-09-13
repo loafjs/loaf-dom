@@ -24,3 +24,6 @@ console.log(L('#content').style('background'));
 
 // multiple selectors
 L('h1, .color-blue').style('color', 'blue');
+
+// inheritance element
+L('#content p').eq(1).style('paddingLeft', '100px');

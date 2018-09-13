@@ -1,6 +1,6 @@
 {
   "name": "loaf-dom",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "description": "dom script library",
   "main": "loaf-dom.js",
   "scripts": {
