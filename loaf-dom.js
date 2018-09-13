@@ -1,94 +1,137 @@
-// version. 0.0.9
+// version. 0.0.11
 
 class LoafDom {
 
-	constructor(element) {
-		this.element = [];
-		this._multiSelector(element);
-	}
+  constructor(element) {
+    this.element = [];
+    this._multiSelector(element);
+  }
 
-	_multiSelector(element) {
-		if(typeof element === 'string') {
-			const el = element.split(',');
-			el.forEach((selectName) => {
-				const select = this._select(selectName.trim());
-				if(select.length) {
-					this._roof(select, (i) => {
-						this.element = Array.prototype.concat.call(this.element, select[i]);
-					});
-				} else {
-					this.element = Array.prototype.concat.call(this.element, select);
-				}
-			});
-		}
-	}
+  _inheritSelector(selector) {
+    const el = selector.split(' ');
+    const len = el.length
 
-	_select(element) {
-		switch(element[0]) {
-			case '#' :
-				element = document.getElementById(element.substring(1));
-				break;
-			case '.' :
-				element = document.getElementsByClassName(element.substring(1));
-				break;
-			default :
-				element = document.getElementsByTagName(element);
-		}
-		return element;
-	}
+    if(len === 1) {
+      this.element = this._arrayElement(this.element, el[0]);
+      return this;
+    }
 
-	_oneSelect() {
-		return this.element.length > 0 ? this.element[0] : this.element;
-	}
+    if(len > 1) {
+      let pass = [];
+      this._roof(len-1, (i) => {
+        const parentEl = this._arrayElement([], el[len-2-i]);
+        const childrenEl = this._arrayElement([], el[len-1-i]);
+        this._roof(childrenEl.length, (i) => {
+          const isParent = this._findInParent(parentEl, childrenEl[i]);
+          if(pass[i] !== false && isParent) pass[i] = this._arrayElement([], el[len-1])[i];
+          else pass[i] = false;
+        });
+      });
+      this.element = this._concat(this.element, pass.filter(Boolean));
+      return this;
+    }
+  }
 
-	_roof(arr, fnc) {
-		const len = arr.length;
-		let i;
-		for(i=0; i<len; i++) {
-			fnc(i);
-		}
-	}
+  _findInParent(parent, children) {
+    let cacheParent = children.parentNode;
+    while(cacheParent !== null) {
+      if(parent.indexOf(cacheParent) !== -1) return cacheParent;
+      cacheParent = cacheParent.parentNode;
+    }
+    return null;
+  }
 
-	_compactSplit(str, value) {
-		return str.split(value).filter(Boolean);
-	}
+  _arrayElement(store, element) {
+    const select = this._select(element);
+    if(select.length) {
+      this._roof(select.length, (i) => {
+        store = this._concat(store, select[i]);
+      });
+    } else {
+      store = this._concat(store, select);
+    }
+    return store;
+  }
 
-	eq(idx) {
-		this.element = this.element[idx];
-		return this;
-	}
+  _multiSelector(element) {
+    if(typeof element === 'string') {
+      const el = element.split(',');
+      el.forEach((selectorStr) => {
+        const trimSelector = selectorStr.trim();
+        this._inheritSelector(trimSelector);
+      });
+    }
+  }
 
-	addClass(...className) {
-		const el = this._oneSelect();
-		el.className = this._compactSplit(el.className, ' ').concat(...className).join(' ');
-		return this;
-	}
+  _select(element) {
+    switch(element[0]) {
+      case '#' :
+        element = document.getElementById(element.substring(1));
+        break;
+      case '.' :
+        element = document.getElementsByClassName(element.substring(1));
+        break;
+      default :
+        element = document.getElementsByTagName(element);
+    }
+    return element;
+  }
 
-	removeClass(className) {
-		const arrayClassName = this._compactSplit(className, ' ');
-		this._roof(this.element, (i) => {
-			const el = this.element[i];
-			el.className = this._compactSplit(el.className, ' ').filter((str) => arrayClassName.indexOf(str) === -1).join(' ');
-		});
-		return this;
-	}
+  _oneSelect() {
+    return this.element[0];
+  }
 
-	attr(key, value = false) {
-		if(!value) return this._oneSelect().getAttribute(key);
-		this._oneSelect().setAttribute(key, value);
-		return this;
-	}
+  _roof(len, fnc) {
+    let i;
+    for(i=0; i<len; i++) {
+      fnc(i);
+    }
+  }
 
-	style(key, value = false) {
-		if(!value) return this._oneSelect().style[key];
-		this._roof(this.element, (i) => {
-			this.element[i].style[key] = value;
-		});
-		return this;
-	}
+  _concat(beforeArr, afterArr) {
+    return Array.prototype.concat.call(beforeArr, afterArr);
+  }
+
+  _compactSplit(str, value) {
+    return str.split(value).filter(Boolean);
+  }
+
+  eq(idx) {
+    this.element = this.element.splice(idx, 1);
+    return this;
+  }
+
+  addClass(...className) {
+    const el = this._oneSelect();
+    el.className = this._compactSplit(el.className, ' ').concat(...className).join(' ');
+    return this;
+  }
+
+  removeClass(className) {
+    const arrayClassName = this._compactSplit(className, ' ');
+    this._roof(this.element.length, (i) => {
+      const el = this.element[i];
+      el.className = this._compactSplit(el.className, ' ').filter((str) => arrayClassName.indexOf(str) === -1).join(' ');
+    });
+    return this;
+  }
+
+  attr(key, value = false) {
+    if(!value) return this._oneSelect().getAttribute(key);
+    this._oneSelect().setAttribute(key, value);
+    return this;
+  }
+
+  style(key, value = false) {
+    if(!value) return this._oneSelect().style[key];
+    this._roof(this.element.length, (i) => {
+      this.element[i].style[key] = value;
+    });
+    return this;
+  }
 
 }
 
 export default (element) => {
-	return new LoafDom(element);
+  return new LoafDom(element);
 }

@@ -36,6 +36,13 @@ if you run the above method after all of dom is loaded, you can see the followin
 
 
 ## ChangeLog
+
+#### v0.0.11
+* modify a typo
+
+#### v0.0.10
+* add selector for inheritance element
+
 #### v0.0.9
 * fix minimum node version 4.0.0 > 6.0.0
 * update readme
