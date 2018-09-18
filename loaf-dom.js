@@ -1,4 +1,4 @@
-// version. 0.0.11
+// version. 0.0.13
 
 class LoafDom {
 
@@ -9,11 +9,10 @@ class LoafDom {
 
   _inheritSelector(selector) {
     const el = selector.split(' ');
-    const len = el.length
+    const len = el.length;
 
     if(len === 1) {
       this.element = this._arrayElement(this.element, el[0]);
-      return this;
     }
 
     if(len > 1) {
@@ -28,8 +27,9 @@ class LoafDom {
         });
       });
       this.element = this._concat(this.element, pass.filter(Boolean));
-      return this;
     }
+
+    return this;
   }
 
   _findInParent(parent, children) {
@@ -43,23 +43,15 @@ class LoafDom {
 
   _arrayElement(store, element) {
     const select = this._select(element);
-    if(select.length) {
-      this._roof(select.length, (i) => {
-        store = this._concat(store, select[i]);
-      });
-    } else {
-      store = this._concat(store, select);
-    }
+    if(!select.length) return this._concat(store, select);
+    this._roof(select.length, i => store = this._concat(store, select[i]));
     return store;
   }
 
   _multiSelector(element) {
     if(typeof element === 'string') {
       const el = element.split(',');
-      el.forEach((selectorStr) => {
-        const trimSelector = selectorStr.trim();
-        this._inheritSelector(trimSelector);
-      });
+      el.forEach(selectorStr => this._inheritSelector(selectorStr.trim()));
     }
   }
 
@@ -109,9 +101,10 @@ class LoafDom {
 
   removeClass(className) {
     const arrayClassName = this._compactSplit(className, ' ');
-    this._roof(this.element.length, (i) => {
-      const el = this.element[i];
-      el.className = this._compactSplit(el.className, ' ').filter((str) => arrayClassName.indexOf(str) === -1).join(' ');
+    this.element.forEach((el) => {
+      el.className = this._compactSplit(el.className, ' ')
+        .filter(str => arrayClassName.indexOf(str) === -1)
+        .join(' ');
     });
     return this;
   }
@@ -124,10 +117,23 @@ class LoafDom {
 
   style(key, value = false) {
     if(!value) return this._oneSelect().style[key];
-    this._roof(this.element.length, (i) => {
-      this.element[i].style[key] = value;
-    });
+    this.element.forEach(el => el.style[key] = value );
     return this;
+  }
+
+  next() {
+    this.element = this.element.map(el => el.nextElementSibling).filter(Boolean);
+    return this;
+  }
+
+  prev() {
+    this.element = this.element.map(el => el.previousElementSibling).filter(Boolean);
+    return this;
+  }
+
+  parent() {
+  	this.element = this.element.map(el => el.parentElement).filter(Boolean);
+  	return this;
   }
 
 }
