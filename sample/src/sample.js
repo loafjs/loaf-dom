@@ -27,3 +27,12 @@ L('h1, .color-blue').style('color', 'blue');
 
 // inheritance element
 L('#content p').eq(1).style('paddingLeft', '100px');
+
+// next
+L('#next-target-p').next().style('background', 'black');
+
+// prev
+L('#prev-target-div').prev().style('color', 'green');
+
+// parent
+L('#prev-target-div p').parent().style('background', 'yellow');
