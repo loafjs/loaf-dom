@@ -4,19 +4,19 @@ let container;
 describe('Loaf-DOM Library Test', function() {
 
   beforeEach(function() {
-  	if(container) return container.innerHTML = '';
-  	const containerArea = document.createElement("div");
-		const dom = document.getElementsByTagName('body')[0];
-		containerArea.innerHTML = '<div id="container"></div>';
-		dom.appendChild(containerArea);
-		container = document.getElementById('container');
+    if(container) return container.innerHTML = '';
+    const containerArea = document.createElement("div");
+    const dom = document.getElementsByTagName('body')[0];
+    containerArea.innerHTML = '<div id="container"></div>';
+    dom.appendChild(containerArea);
+    container = document.getElementById('container');
   });
 
   it('selector', function() {
     container.innerHTML = `
-    	<article>article</article>
-    	<div id="id">id</div>
-    	<div class="class">class</div>
+      <article>article</article>
+      <div id="id">id</div>
+      <div class="class">class</div>
     `;
 
     expect(L('article').element[0].innerText).toEqual('article');
@@ -25,18 +25,18 @@ describe('Loaf-DOM Library Test', function() {
   });
 
   it('eq Selector', function() {
-   	container.innerHTML = `
-    	<p>First</p>
-    	<p>Second</p>
-    	<p>Third</p>
+    container.innerHTML = `
+      <p>First</p>
+      <p>Second</p>
+      <p>Third</p>
     `;
 
     expect(L('p').eq(1).element[0].innerText).toEqual('Second');
   });
 
   it('addClass', function() {
-   	container.innerHTML = `
-    	<div id="add-class">add-class</p>
+    container.innerHTML = `
+      <div id="add-class">add-class</p>
     `;
 
     L('#add-class').addClass('add-class');
@@ -44,9 +44,9 @@ describe('Loaf-DOM Library Test', function() {
   });
 
   it('removeClass', function() {
-   	container.innerHTML = `
-    	<div class="remove-class-choice remove-class">remove-class1</p>
-    	<div class="remove-class-choice remove-class">remove-class2</p>
+    container.innerHTML = `
+      <div class="remove-class-choice remove-class">remove-class1</p>
+      <div class="remove-class-choice remove-class">remove-class2</p>
     `;
 
     L('.remove-class-choice').removeClass('remove-class');
@@ -55,8 +55,8 @@ describe('Loaf-DOM Library Test', function() {
   });
 
   it('get/set attr', function() {
-   	container.innerHTML = `
-    	<div id="attr">attr</p>
+    container.innerHTML = `
+      <div id="attr">attr</p>
     `;
 
     L('#attr').attr('key', 'value');
@@ -65,8 +65,8 @@ describe('Loaf-DOM Library Test', function() {
   });
 
   it('get/set style', function() {
-   	container.innerHTML = `
-    	<div id="style">style</p>
+    container.innerHTML = `
+      <div id="style">style</p>
     `;
 
     L('#style').style('background', 'red');
@@ -76,32 +76,32 @@ describe('Loaf-DOM Library Test', function() {
 
 
   it('nert', function() {
-   	container.innerHTML = `
-    	<p>First</p>
-    	<p>Second</p>
-    	<p>Third</p>
+    container.innerHTML = `
+      <p>First</p>
+      <p>Second</p>
+      <p>Third</p>
     `;
 
     expect(L('p').eq(0).next().element[0].innerText).toEqual('Second');
   });
 
   it('prev', function() {
-   	container.innerHTML = `
-    	<p>First</p>
-    	<p>Second</p>
-    	<p>Third</p>
+    container.innerHTML = `
+      <p>First</p>
+      <p>Second</p>
+      <p>Third</p>
     `;
 
     expect(L('p').eq(2).prev().element[0].innerText).toEqual('Second');
   });
 
   it('parent', function() {
-   	container.innerHTML = `
-   		<div id="parent">
-	    	<p>First</p>
-	    	<p>Second</p>
-	    	<p>Third</p>
-    	</div>
+    container.innerHTML = `
+       <div id="parent">
+        <p>First</p>
+        <p>Second</p>
+        <p>Third</p>
+      </div>
     `;
 
     expect(L('p').parent().element[0].id).toEqual('parent');
