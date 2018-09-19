@@ -1,10 +1,11 @@
 {
   "name": "loaf-dom",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "dom script library",
   "main": "loaf-dom.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack-dev-server",
+    "test": "./node_modules/karma/bin/karma start"
   },
   "repository": {
     "type": "git",
@@ -13,9 +14,25 @@
   "engines": {
     "node": ">=6.0.0"
   },
-  "keywords": ["util"],
+  "keywords": [
+    "util"
+  ],
   "author": "falsy",
   "license": "WTFPL",
   "bugs": "https://github.com/loafjs/loaf-dom/issues",
-  "homepage": "https://falsy.me"
+  "homepage": "https://falsy.me",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "jasmine": "^2.99.0",
+    "jasmine-core": "^2.99.0",
+    "karma": "^3.0.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.2",
+    "karma-webpack": "^3.0.5",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.7"
+  }
 }
