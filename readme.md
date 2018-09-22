@@ -2,7 +2,6 @@
 A light and fast DOM Script library for clients.
 many browsers do not yet support ES6 +, so you should use it with a compiler such as ['Babel'](https://github.com/babel/babel).
 You can see the sample code using 'Webpack' and 'Babel' in `/sample`.
-And unit tests use 'Webpack', 'Karma' and 'Jasmine'.
 
 ## Install
 ```
@@ -42,6 +41,11 @@ npm test
 
 
 ## ChangeLog
+
+#### v0.0.15
+* add children()
+* add parents()
+* edit _concat()
 
 #### v0.0.14
 * add unit test code (Karma, Jasmine)
