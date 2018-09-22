@@ -7,6 +7,7 @@ describe('Loaf-DOM Library Test', function() {
     if(container) return container.innerHTML = '';
     const containerArea = document.createElement("div");
     const dom = document.getElementsByTagName('body')[0];
+
     containerArea.innerHTML = '<div id="container"></div>';
     dom.appendChild(containerArea);
     container = document.getElementById('container');
@@ -97,7 +98,7 @@ describe('Loaf-DOM Library Test', function() {
 
   it('parent', function() {
     container.innerHTML = `
-       <div id="parent">
+      <div id="parent">
         <p>First</p>
         <p>Second</p>
         <p>Third</p>
@@ -105,6 +106,32 @@ describe('Loaf-DOM Library Test', function() {
     `;
 
     expect(L('p').parent().element[0].id).toEqual('parent');
+  });
+
+  it('children', function() {
+    container.innerHTML = `
+      <div id="parent">
+        <p>children1</p>
+        <p>children2</p>
+        <p id="choice-children">choice-children</p>
+      </div>
+    `;
+
+    expect(L('#parent').children().eq(1).element[0].innerText).toEqual('children2');
+    expect(L('#parent').children('#choice-children').element[0].innerText).toEqual('choice-children');
+  });
+
+  it('parents', function() {
+    container.innerHTML = `
+      <div id="target-parent" class="target">
+        <div id="parent">
+          <p id="children">children1</p>
+          <p>children2</p>
+        </div>
+      </div>
+    `;
+
+    expect(L('#children').parents('#target-parent').element[0].className).toEqual('target');
   });
 
 });
