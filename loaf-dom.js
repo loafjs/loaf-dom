@@ -86,7 +86,11 @@ class LoafDom {
   }
 
   _concat(beforeArr, afterArr) {
-    return Array.prototype.concat.call(beforeArr, afterArr);
+    afterArr = Array.prototype.concat.call([], afterArr);
+    afterArr.forEach(el => {
+      if(beforeArr.indexOf(el) === -1) beforeArr = Array.prototype.concat.call(beforeArr, el);
+    });
+    return beforeArr;
   }
 
   _compactSplit(str, value) {
@@ -141,18 +145,25 @@ class LoafDom {
     return this;
   }
 
-  children(selectChildren) {
-    const selectChildrenEl = this._arrayElement([], selectChildren);
+  children(selectChild) {
+    const selectChildEl = this._arrayElement([], selectChild);
     let store = [];
     this.element.forEach(el => {
       const child = el.children;
       this._roof(child.length, i => {
-        if(selectChildren) {
-          if(selectChildrenEl.indexOf(child[i]) !== -1) store = this._concat(store, child[i]);
-        } else {
-          store = this._concat(store, child[i])
-        }
+        if(!selectChild) return store = this._concat(store, child[i]);
+        if(selectChildEl.indexOf(child[i]) !== -1) store = this._concat(store, child[i]);
       });
+    });
+    this.element = store;
+    return this;
+  }
+
+  parents(selectParent) {
+    const selectParentEl = this._arrayElement([], selectParent);
+    let store = [];
+    this.element.forEach(el => {
+      store = this._concat(store, this._findInParent(selectParentEl, el));
     });
     this.element = store;
     return this;
