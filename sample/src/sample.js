@@ -1,4 +1,4 @@
-import L from 'loaf-dom';
+import L from './loaf-dom';
 
 // addClass
 L('#wrap').addClass('add-class');
@@ -36,3 +36,7 @@ L('#prev-target-div').prev().style('color', 'green');
 
 // parent
 L('#prev-target-div p').parent().style('background', 'yellow');
+
+// children
+L('#children-choice').children().style('background', 'green');
+L('#children-choice').children('.target-children').style('color', 'yellow');

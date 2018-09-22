@@ -1,4 +1,4 @@
-// version. 0.0.13
+// version. 0.0.15
 
 class LoafDom {
 
@@ -16,20 +16,23 @@ class LoafDom {
     }
 
     if(len > 1) {
-      let pass = [];
-      this._roof(len-1, (i) => {
-        const parentEl = this._arrayElement([], el[len-2-i]);
-        const childrenEl = this._arrayElement([], el[len-1-i]);
-        this._roof(childrenEl.length, (i) => {
-          const isParent = this._findInParent(parentEl, childrenEl[i]);
-          if(pass[i] !== false && isParent) pass[i] = this._arrayElement([], el[len-1])[i];
-          else pass[i] = false;
-        });
-      });
+      const pass = this._searchInParent(el, len);
       this.element = this._concat(this.element, pass.filter(Boolean));
     }
+  }
 
-    return this;
+  _searchInParent(element, len) {
+    let pass = [];
+    this._roof(len-1, (i) => {
+      const parentEl = this._arrayElement([], element[len-2-i]);
+      const childrenEl = this._arrayElement([], element[len-1-i]);
+      this._roof(childrenEl.length, (i) => {
+        const isParent = this._findInParent(parentEl, childrenEl[i]);
+        if(pass[i] !== false && isParent) pass[i] = this._arrayElement([], element[len-1])[i];
+        else pass[i] = false;
+      });
+    });
+    return pass;
   }
 
   _findInParent(parent, children) {
@@ -43,6 +46,7 @@ class LoafDom {
 
   _arrayElement(store, element) {
     const select = this._select(element);
+    if(!select) return store;
     if(!select.length) return this._concat(store, select);
     this._roof(select.length, i => store = this._concat(store, select[i]));
     return store;
@@ -56,6 +60,7 @@ class LoafDom {
   }
 
   _select(element) {
+    if(typeof element !== 'string') return;
     switch(element[0]) {
       case '#' :
         element = document.getElementById(element.substring(1));
@@ -132,8 +137,25 @@ class LoafDom {
   }
 
   parent() {
-  	this.element = this.element.map(el => el.parentElement).filter(Boolean);
-  	return this;
+    this.element = this.element.map(el => el.parentElement).filter(Boolean);
+    return this;
+  }
+
+  children(selectChildren) {
+    const selectChildrenEl = this._arrayElement([], selectChildren);
+    let store = [];
+    this.element.forEach(el => {
+      const child = el.children;
+      this._roof(child.length, i => {
+        if(selectChildren) {
+          if(selectChildrenEl.indexOf(child[i]) !== -1) store = this._concat(store, child[i]);
+        } else {
+          store = this._concat(store, child[i])
+        }
+      });
+    });
+    this.element = store;
+    return this;
   }
 
 }
