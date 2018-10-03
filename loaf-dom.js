@@ -1,4 +1,4 @@
-// version. 0.0.15
+// version. 0.0.17
 
 class LoafDom {
 
@@ -7,6 +7,12 @@ class LoafDom {
     this._multiSelector(element);
   }
 
+  /**
+   * Select the dom selector for the inherited relationship entered as blank
+   *
+   * @private
+   * @param {String} Element selector
+   */
   _inheritSelector(selector) {
     const el = selector.split(' ');
     const len = el.length;
@@ -21,6 +27,14 @@ class LoafDom {
     }
   }
 
+  /**
+   * Find child elements that satisfy all inheritance criteria.
+   *
+   * @private
+   * @param {Array} Selectors of inheritance
+   * @param {Number} Number of selectors of inheritance
+   * @retuns {Array} Selector with specified parent
+   */
   _searchInParent(element, len) {
     let pass = [];
     this._roof(len-1, (i) => {
@@ -35,6 +49,14 @@ class LoafDom {
     return pass;
   }
 
+  /**
+   * Find the parent element from the child element.
+   *
+   * @private
+   * @param {Array} Array of parent elements
+   * @param {Object} Child element
+   * @retuns {Array|Null} Returns the parent if there is a parent element, or null if there is no parent
+   */
   _findInParent(parent, children) {
     let cacheParent = children.parentNode;
     while(cacheParent !== null) {
@@ -44,6 +66,14 @@ class LoafDom {
     return null;
   }
 
+  /**
+   * Returns an array of the corresponding elements of the selector
+   *
+   * @private
+   * @param {Array} Default array to save
+   * @param {String} Element selector
+   * @retuns {Array} Element selector array
+   */
   _arrayElement(store, element) {
     const select = this._select(element);
     if(!select) return store;
@@ -52,6 +82,12 @@ class LoafDom {
     return store;
   }
 
+  /**
+   * Find the element by dividing the selector separated by commas.
+   *
+   * @private
+   * @param {String} Element selector
+   */
   _multiSelector(element) {
     if(typeof element === 'string') {
       const el = element.split(',');
@@ -59,6 +95,13 @@ class LoafDom {
     }
   }
 
+  /**
+   * Finds the element in the DOM by separating the selector string.
+   *
+   * @private
+   * @param {String} Element selector
+   * @returns {Object} Element selector
+   */
   _select(element) {
     if(typeof element !== 'string') return;
     switch(element[0]) {
@@ -74,10 +117,23 @@ class LoafDom {
     return element;
   }
 
-  _oneSelect() {
+  /**
+   * Returns the first of the selected elements.
+   *
+   * @private
+   * @returns {Object} First element selector
+   */
+   _oneSelect() {
     return this.element[0];
   }
 
+  /**
+   * Perform a loop.
+   *
+   * @private
+   * @params {Number} Number of iterations
+   * @params {Functions} Functions to be repeated
+   */
   _roof(len, fnc) {
     let i;
     for(i=0; i<len; i++) {
@@ -85,6 +141,14 @@ class LoafDom {
     }
   }
 
+  /**
+   * Adds a new selector array or a new selector element to an existing selector array.
+   *
+   * @private
+   * @params {Array} Default array to save
+   * @params {Array|Object} Element or array of elements
+   * @returns {Array} Element selector array
+   */
   _concat(beforeArr, afterArr) {
     afterArr = Array.prototype.concat.call([], afterArr);
     afterArr.forEach(el => {
@@ -93,21 +157,50 @@ class LoafDom {
     return beforeArr;
   }
 
+  /**
+   * Divide the specified string into an array, and then exclude the false element.
+   *
+   * @private
+   * @params {String} Strings before division into an array
+   * @params {String} String to divide
+   * @returns {Array} Compact arrangement
+   */
   _compactSplit(str, value) {
     return str.split(value).filter(Boolean);
   }
 
+  /**
+   * Select the element of the selector in that sequence.
+   *
+   * @static
+   * @params {Number} Order of elements to select
+   * @returns {Object} Class Loaf-DOM
+   */
   eq(idx) {
     this.element = this.element.splice(idx, 1);
     return this;
   }
 
+  /**
+   * Add a class to the selected element.
+   *
+   * @static
+   * @params {Array} An array of class names
+   * @returns {Object} Class Loaf-DOM
+   */
   addClass(...className) {
     const el = this._oneSelect();
     el.className = this._compactSplit(el.className, ' ').concat(...className).join(' ');
     return this;
   }
 
+  /**
+   * Clears the corresponding class of selector
+   *
+   * @static
+   * @params {String} Class name
+   * @returns {Object} Class Loaf-DOM
+   */
   removeClass(className) {
     const arrayClassName = this._compactSplit(className, ' ');
     this.element.forEach((el) => {
@@ -118,33 +211,74 @@ class LoafDom {
     return this;
   }
 
-  attr(key, value = false) {
+  /**
+   * Invoke or set the property value
+   *
+   * @static
+   * @params {String} Attribute Key Name
+   * @params {String|Null} Attribute Value
+   * @returns {Object|String} Class Loaf-DOM or Attribute Value
+   */
+  attr(key, value=null) {
     if(!value) return this._oneSelect().getAttribute(key);
     this._oneSelect().setAttribute(key, value);
     return this;
   }
 
-  style(key, value = false) {
+  /**
+   * Gives or reads style attributes to the element.
+   *
+   * @static
+   * @params {String} Style Key Name
+   * @params {String|Null} Style Value
+   * @returns {Object|String} Class Loaf-DOM or Style Value
+   */
+  style(key, value=null) {
     if(!value) return this._oneSelect().style[key];
     this.element.forEach(el => el.style[key] = value );
     return this;
   }
 
+  /**
+   * Selects the next element of the selected element.
+   *
+   * @static
+   * @returns {Object} Class Loaf-DOM
+   */
   next() {
     this.element = this.element.map(el => el.nextElementSibling).filter(Boolean);
     return this;
   }
 
+  /**
+   * Selects the prev element of the selected element.
+   *
+   * @static
+   * @returns {Object} Class Loaf-DOM
+   */
   prev() {
     this.element = this.element.map(el => el.previousElementSibling).filter(Boolean);
     return this;
   }
 
+  /**
+   * Select the parent of the selected element.
+   *
+   * @static
+   * @returns {Object} Class Loaf-DOM
+   */
   parent() {
     this.element = this.element.map(el => el.parentElement).filter(Boolean);
     return this;
   }
 
+  /**
+   * Select any of the child elements.
+   *
+   * @static
+   * @params {String} Child element selector
+   * @returns {Object} Class Loaf-DOM
+   */
   children(selectChild) {
     const selectChildEl = this._arrayElement([], selectChild);
     let store = [];
@@ -159,6 +293,13 @@ class LoafDom {
     return this;
   }
 
+  /**
+   * Selecting an input element among the parent elements
+   *
+   * @static
+   * @params {String} Parent element selector
+   * @returns {Object} Class Loaf-DOM
+   */
   parents(selectParent) {
     const selectParentEl = this._arrayElement([], selectParent);
     let store = [];
