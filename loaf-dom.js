@@ -33,7 +33,7 @@ class LoafDom {
    * @private
    * @param {Array} Selectors of inheritance
    * @param {Number} Number of selectors of inheritance
-   * @retuns {Array} Selector with specified parent
+   * @returns {Array} Selector with specified parent
    */
   _searchInParent(element, len) {
     let pass = [];
@@ -55,7 +55,7 @@ class LoafDom {
    * @private
    * @param {Array} Array of parent elements
    * @param {Object} Child element
-   * @retuns {Array|Null} Returns the parent if there is a parent element, or null if there is no parent
+   * @returns {Array|Null} Returns the parent if there is a parent element, or null if there is no parent
    */
   _findInParent(parent, children) {
     let cacheParent = children.parentNode;
@@ -72,7 +72,7 @@ class LoafDom {
    * @private
    * @param {Array} Default array to save
    * @param {String} Element selector
-   * @retuns {Array} Element selector array
+   * @returns {Array} Element selector array
    */
   _arrayElement(store, element) {
     const select = this._select(element);
@@ -131,8 +131,8 @@ class LoafDom {
    * Perform a loop.
    *
    * @private
-   * @params {Number} Number of iterations
-   * @params {Functions} Functions to be repeated
+   * @param {Number} Number of iterations
+   * @param {Functions} Functions to be repeated
    */
   _roof(len, fnc) {
     let i;
@@ -145,8 +145,8 @@ class LoafDom {
    * Adds a new selector array or a new selector element to an existing selector array.
    *
    * @private
-   * @params {Array} Default array to save
-   * @params {Array|Object} Element or array of elements
+   * @param {Array} Default array to save
+   * @param {Array|Object} Element or array of elements
    * @returns {Array} Element selector array
    */
   _concat(beforeArr, afterArr) {
@@ -161,8 +161,8 @@ class LoafDom {
    * Divide the specified string into an array, and then exclude the false element.
    *
    * @private
-   * @params {String} Strings before division into an array
-   * @params {String} String to divide
+   * @param {String} Strings before division into an array
+   * @param {String} String to divide
    * @returns {Array} Compact arrangement
    */
   _compactSplit(str, value) {
@@ -173,7 +173,7 @@ class LoafDom {
    * Select the element of the selector in that sequence.
    *
    * @static
-   * @params {Number} Order of elements to select
+   * @param {Number} Order of elements to select
    * @returns {Object} Class Loaf-DOM
    */
   eq(idx) {
@@ -185,7 +185,7 @@ class LoafDom {
    * Add a class to the selected element.
    *
    * @static
-   * @params {Array} An array of class names
+   * @param {Array} An array of class names
    * @returns {Object} Class Loaf-DOM
    */
   addClass(...className) {
@@ -198,7 +198,7 @@ class LoafDom {
    * Clears the corresponding class of selector
    *
    * @static
-   * @params {String} Class name
+   * @param {String} Class name
    * @returns {Object} Class Loaf-DOM
    */
   removeClass(className) {
@@ -215,8 +215,8 @@ class LoafDom {
    * Invoke or set the property value
    *
    * @static
-   * @params {String} Attribute Key Name
-   * @params {String|Null} Attribute Value
+   * @param {String} Attribute Key Name
+   * @param {String|Null} Attribute Value
    * @returns {Object|String} Class Loaf-DOM or Attribute Value
    */
   attr(key, value=null) {
@@ -229,8 +229,8 @@ class LoafDom {
    * Gives or reads style attributes to the element.
    *
    * @static
-   * @params {String} Style Key Name
-   * @params {String|Null} Style Value
+   * @param {String} Style Key Name
+   * @param {String|Null} Style Value
    * @returns {Object|String} Class Loaf-DOM or Style Value
    */
   style(key, value=null) {
@@ -276,7 +276,7 @@ class LoafDom {
    * Select any of the child elements.
    *
    * @static
-   * @params {String} Child element selector
+   * @param {String} Child element selector
    * @returns {Object} Class Loaf-DOM
    */
   children(selectChild) {
@@ -297,7 +297,7 @@ class LoafDom {
    * Selecting an input element among the parent elements
    *
    * @static
-   * @params {String} Parent element selector
+   * @param {String} Parent element selector
    * @returns {Object} Class Loaf-DOM
    */
   parents(selectParent) {
