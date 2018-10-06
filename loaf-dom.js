@@ -328,7 +328,9 @@ class LoafDom {
 
     this.element.forEach(el => {
       for(let key in option) {
-        const start = parseInt(el.style[key]);
+        const checkTarget = (key === 'scrollLeft' || key === 'scrollTop');
+        const target = checkTarget ? el : el.style;
+        const start = parseInt(target[key]);
         const finish = start + option[key];
         let time = 0;
         let position = start;
@@ -336,14 +338,13 @@ class LoafDom {
         this.animation.key = setInterval(() => {
           time += 1 / fps;
           position = Easing[easing](time * 100 / secDuration, time, start, finish, secDuration);
-
           if (position >= finish) {
             clearInterval(this.animation.key);
-            el.style[key] = finish + 'px';
+            target[key] = checkTarget ? finish : finish + 'px';
             if(callback) callback();
             return;
           }
-          el.style[key] = position + 'px';
+          target[key] = checkTarget ? position : position + 'px';
         }, 1000 / fps);
       }
     });
