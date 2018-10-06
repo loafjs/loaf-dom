@@ -43,3 +43,7 @@ L('#children-choice').children('.target-children').style('color', 'yellow');
 
 // parents
 L('.target-children').parents('#children-choice').style('lineHeight', '40px');
+
+
+// animate
+L('#animation').animate({left: 500}, 2000);

@@ -1,9 +1,11 @@
-// version. 0.0.17
+// version. 0.0.18
+import Easing from './easing';
 
 class LoafDom {
 
   constructor(element) {
     this.element = [];
+    this.animation = {};
     this._multiSelector(element);
   }
 
@@ -308,6 +310,43 @@ class LoafDom {
     });
     this.element = store;
     return this;
+  }
+
+  /**
+   * It gives dynamic change.
+   *
+   * @static
+   * @param {Object} Change the key and value
+   * @param {Number} Time to change
+   * @param {Function} callback function
+   */
+  animate(option, duration, easing='easeOutSine', callback=null) {
+    const fps = 60;
+    const secDuration = duration / 1000;
+
+    for(let ani in this.animation) clearInterval(this.animation[ani]);
+
+    this.element.forEach(el => {
+      for(let key in option) {
+        const start = parseInt(el.style[key]);
+        const finish = start + option[key];
+        let time = 0;
+        let position = start;
+
+        this.animation.key = setInterval(() => {
+          time += 1 / fps;
+          position = Easing[easing](time * 100 / secDuration, time, start, finish, secDuration);
+
+          if (position >= finish) {
+            clearInterval(this.animation.key);
+            el.style[key] = finish + 'px';
+            if(callback) callback();
+            return;
+          }
+          el.style[key] = position + 'px';
+        }, 1000 / fps);
+      }
+    });
   }
 
 }
