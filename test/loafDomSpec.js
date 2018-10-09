@@ -134,4 +134,18 @@ describe('Loaf-DOM Library Test', function() {
     expect(L('#children').parents('#target-parent').element[0].className).toEqual('target');
   });
 
+  it('animation', function() {
+    container.innerHTML = `
+      <div>
+        <div id="animation" style="position: absolute; width: 100px; height: 100px; left: 0; top: 0;"></div>
+      </div>
+    `;
+
+    expect(L('#animation').style('left')).toEqual('0px');
+    L('#animation').animate({left: 500}, 1000, () => {
+      expect(L('#animation').style('left')).toEqual('500px');
+    });
+
+  });
+
 });
