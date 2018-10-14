@@ -1,4 +1,4 @@
-// version. 0.0.18
+// version. 0.0.19
 import Easing from './easing';
 
 class LoafDom {
@@ -7,6 +7,7 @@ class LoafDom {
     this.element = [];
     this.animation = {};
     this._multiSelector(element);
+    return this;
   }
 
   /**
@@ -350,6 +351,31 @@ class LoafDom {
     });
   }
 
+  /**
+   * Add a scroll event.
+   *
+   * @static
+   * @param {Function} callback function
+   */
+  scroll(callback) {
+    this.element.forEach(el => {
+      el.addEventListener('scroll', callback);
+    });
+    return this;
+  }
+
+  /**
+   * Add a click event.
+   *
+   * @static
+   * @param {Function} callback function
+   */
+  click(callback) {
+    this.element.forEach(el => {
+      el.addEventListener('click', callback);
+    });
+    return this;
+  }
 }
 
 export default (element) => {

@@ -142,10 +142,10 @@ describe('Loaf-DOM Library Test', function() {
     `;
 
     expect(L('#animation').style('left')).toEqual('0px');
+
     L('#animation').animate({left: 500}, 1000, () => {
       expect(L('#animation').style('left')).toEqual('500px');
     });
-
   });
 
 });

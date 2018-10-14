@@ -49,3 +49,9 @@ L('.target-children').parents('#children-choice').style('lineHeight', '40px');
 L('#animation').animate({left: 500}, 2000);
 
 L('#animation-scroll').animate({scrollLeft: 200}, 2000);
+
+// scroll
+L('#wrap').scroll(() => console.log('scroll'));
+
+// click
+L('.click-target').click(() => console.log('click'));
