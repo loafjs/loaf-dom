@@ -46,7 +46,7 @@ L('.target-children').parents('#children-choice').style('lineHeight', '40px');
 
 
 // animate
-L('#animation').animate({left: 500}, 2000);
+L('#animation').animate({left: 500}, 2000, 'easeInCubic', () => console.log('callback'));
 
 L('#animation-scroll').animate({scrollLeft: 200}, 2000);
 
@@ -55,3 +55,6 @@ L('#wrap').scroll(() => console.log('scroll'));
 
 // click
 L('.click-target').click(() => console.log('click'));
+
+// el
+console.log(L('#el-method-target p').el(1).innerText);

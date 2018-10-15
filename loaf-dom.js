@@ -1,11 +1,13 @@
-// version. 0.0.19
+// version. 0.1.0
 import Easing from './easing';
+
+// Record the iteration of the animation.
+const animation = {};
 
 class LoafDom {
 
   constructor(element) {
     this.element = [];
-    this.animation = {};
     this._multiSelector(element);
     return this;
   }
@@ -96,6 +98,10 @@ class LoafDom {
       const el = element.split(',');
       el.forEach(selectorStr => this._inheritSelector(selectorStr.trim()));
     }
+
+    if(typeof element === 'object') {
+      this.element = element;
+    }
   }
 
   /**
@@ -173,6 +179,37 @@ class LoafDom {
   }
 
   /**
+   * Returns an array of the unique values of the two arrays.
+   *
+   * @private
+   * @returns {Array} An array of unique values
+   */
+  _union(arr1, arr2) {
+    return [...new Set([...arr1, ...arr2])];
+  }
+
+  /**
+   * Returns the Select the dom element
+   *
+   * @static
+   * @param {Number} Dom element order
+   * @returns {Object} Select the dom element
+   */
+  el(idx) {
+    return typeof idx === 'undefined' ? this.element[0] : this.element[idx];
+  }
+
+  /**
+   * Returns the number of currently selected elements
+   *
+   * @static
+   * @returns {Number} Number of currently selected elements
+   */
+  length() {
+    return this.element.length;
+  }
+
+  /**
    * Select the element of the selector in that sequence.
    *
    * @static
@@ -193,7 +230,9 @@ class LoafDom {
    */
   addClass(...className) {
     const el = this._oneSelect();
-    el.className = this._compactSplit(el.className, ' ').concat(...className).join(' ');
+    const baseClassName = this._compactSplit(el.className, ' ');
+    const addClassNamee = [...className];
+    el.className = this._union(baseClassName, addClassNamee).join(' ');
     return this;
   }
 
@@ -246,33 +285,30 @@ class LoafDom {
    * Selects the next element of the selected element.
    *
    * @static
-   * @returns {Object} Class Loaf-DOM
+   * @returns {Object} New selector dom class
    */
   next() {
-    this.element = this.element.map(el => el.nextElementSibling).filter(Boolean);
-    return this;
+    return new LoafDom(this.element.map(el => el.nextElementSibling).filter(Boolean));
   }
 
   /**
    * Selects the prev element of the selected element.
    *
    * @static
-   * @returns {Object} Class Loaf-DOM
+   * @returns {Object} New selector dom class
    */
   prev() {
-    this.element = this.element.map(el => el.previousElementSibling).filter(Boolean);
-    return this;
+    return new LoafDom(this.element.map(el => el.previousElementSibling).filter(Boolean));
   }
 
   /**
    * Select the parent of the selected element.
    *
    * @static
-   * @returns {Object} Class Loaf-DOM
+   * @returns {Object} New selector dom class
    */
   parent() {
-    this.element = this.element.map(el => el.parentElement).filter(Boolean);
-    return this;
+    return new LoafDom(this.element.map(el => el.parentElement).filter(Boolean));
   }
 
   /**
@@ -280,7 +316,7 @@ class LoafDom {
    *
    * @static
    * @param {String} Child element selector
-   * @returns {Object} Class Loaf-DOM
+   * @returns {Object} New selector dom class
    */
   children(selectChild) {
     const selectChildEl = this._arrayElement([], selectChild);
@@ -292,8 +328,7 @@ class LoafDom {
         if(selectChildEl.indexOf(child[i]) !== -1) store = this._concat(store, child[i]);
       });
     });
-    this.element = store;
-    return this;
+    return new LoafDom(store);
   }
 
   /**
@@ -301,7 +336,7 @@ class LoafDom {
    *
    * @static
    * @param {String} Parent element selector
-   * @returns {Object} Class Loaf-DOM
+   * @returns {Object} New selector dom class
    */
   parents(selectParent) {
     const selectParentEl = this._arrayElement([], selectParent);
@@ -309,8 +344,7 @@ class LoafDom {
     this.element.forEach(el => {
       store = this._concat(store, this._findInParent(selectParentEl, el));
     });
-    this.element = store;
-    return this;
+    return new LoafDom(store);
   }
 
   /**
@@ -325,22 +359,21 @@ class LoafDom {
     const fps = 60;
     const secDuration = duration / 1000;
 
-    for(let ani in this.animation) clearInterval(this.animation[ani]);
-
     this.element.forEach(el => {
       for(let key in option) {
         const checkTarget = (key === 'scrollLeft' || key === 'scrollTop');
         const target = checkTarget ? el : el.style;
         const start = parseInt(target[key]);
-        const finish = start + option[key];
+        const variation = option[key] - start;
+        const finish = option[key];
         let time = 0;
         let position = start;
 
-        this.animation.key = setInterval(() => {
+        animation[key] = setInterval(() => {
           time += 1 / fps;
-          position = Easing[easing](time * 100 / secDuration, time, start, finish, secDuration);
-          if (position >= finish) {
-            clearInterval(this.animation.key);
+          position = Easing[easing](time * 100 / secDuration, time, start, variation, secDuration);
+          if ((variation > 0 && position >= finish) || (variation < 0 && position <= finish)) {
+            clearInterval(animation[key]);
             target[key] = checkTarget ? finish : finish + 'px';
             if(callback) callback();
             return;
