@@ -1,4 +1,4 @@
-# Loaf-DOM ![loaf-dom version](https://img.shields.io/badge/version-v0.1.0-green.svg)
+# Loaf-DOM ![loaf-dom version](https://img.shields.io/badge/version-v0.1.1-green.svg)
 A light and fast DOM Script library for clients.
 many browsers do not yet support ES6 +, so you should use it with a compiler such as ['Babel'](https://github.com/babel/babel).
 You can see the sample code using 'Webpack' and 'Babel' in `/sample`.
