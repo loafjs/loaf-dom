@@ -85,5 +85,9 @@ npm test
 
 ## ChangeLog
 
+#### v0.1.1
+* add method
+(trigger, offset, width, height, scrollTop, scrollLeft, scrollHeight, scrollWidth, html, text)
+
 #### v0.1.0
 * init beta version

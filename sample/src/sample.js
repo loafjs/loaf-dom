@@ -14,12 +14,12 @@ L('p').eq(2).addClass('eq2-add-class');
 // set attr
 L('#content').attr('new-attr', 'attrValue');
 // get attr
-console.log(L('#content').attr('new-attr'));
+console.log('#content "new-attr" value: ' + L('#content').attr('new-attr'));
 
 // set style
 L('#content').style('background', 'red');
 // get style
-console.log(L('#content').style('background'));
+console.log('#content background style: ' + L('#content').style('background'));
 
 
 // multiple selectors
@@ -58,3 +58,22 @@ L('.click-target').click(() => console.log('click'));
 
 // el
 console.log(L('#el-method-target p').el(1).innerText);
+
+// click()
+L('#click-event').click(() => console.log('click ok'));
+L('#click-event').click();
+
+// trigger
+L('#click-event').trigger('click');
+
+// offset
+console.log('offset top value: ' + L('#click-event').offset().top);
+
+// innerText
+L('#inner-text').text('insert text');
+console.log('inner text value: ' + L('#inner-text').text());
+
+// innerHTML
+L('#inner-html').html('<p>insert html</p>');
+console.log('inner html value: ' + L('#inner-html').html());
+

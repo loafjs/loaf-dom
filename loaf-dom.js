@@ -1,4 +1,4 @@
-// version. 0.1.0
+// version. 0.1.1
 import Easing from './easing';
 
 // Record the iteration of the animation.
@@ -389,10 +389,12 @@ class LoafDom {
    *
    * @static
    * @param {Function} callback function
+   * @returns {Object} Class Loaf-DOM
    */
-  scroll(callback) {
+  scroll(callback=null) {
     this.element.forEach(el => {
-      el.addEventListener('scroll', callback);
+      if(callback) el.addEventListener('scroll', callback);
+      else el.scroll();
     });
     return this;
   }
@@ -402,13 +404,132 @@ class LoafDom {
    *
    * @static
    * @param {Function} callback function
+   * @returns {Object} Class Loaf-DOM
    */
-  click(callback) {
+  click(callback = null) {
     this.element.forEach(el => {
-      el.addEventListener('click', callback);
+      if(callback) el.addEventListener('click', callback);
+      else el.click();
     });
     return this;
   }
+
+  /**
+   * Event trigger.
+   *
+   * @static
+   * @param {String} Event name to run
+   * @returns {Object} Class Loaf-DOM
+   */
+  trigger(eventName = null) {
+    if(!eventName) return this;
+    this.element.forEach(el => {
+      if(el[eventName]) el[eventName]();
+    });
+    return this;
+  }
+
+  /**
+   * Returns the offset value.
+   *
+   * @static
+   * @returns {Object} offset value
+   */
+  offset() {
+    const el = this._oneSelect();
+    return { top: el.offsetTop, left: el.offsetLeft, width: el.offsetWidth, height: el.offsetHeight }
+  }
+
+  /**
+   * Returns the width value of the element.
+   *
+   * @static
+   * @returns {Number} The width value of the first element
+   */
+  width() {
+    return this._oneSelect().clientWidth;
+  }
+
+  /**
+   * Returns the height value of the element.
+   *
+   * @static
+   * @returns {Number} The height value of the first element
+   */
+  height() {
+    return this._oneSelect().clientHeight;
+  }
+
+  /**
+   * Returns the scroll position of the top of the element.
+   *
+   * @static
+   * @returns {Number} The scroll position of the top of the element
+   */
+  scrollTop() {
+    return this._oneSelect().scrollTop;
+  }
+
+  /**
+   * Returns the scroll position of the left of the element.
+   *
+   * @static
+   * @returns {Number} The scroll position of the left of the element
+   */
+  scrollLeft() {
+    return this._oneSelect().scrollLeft;
+  }
+
+  /**
+   * Returns the height value of the scroll.
+   *
+   * @static
+   * @returns {Number} The height value of the scroll
+   */
+  scrollHeight() {
+    return this._oneSelect().scrollHeight;
+  }
+
+  /**
+   * Returns the width value of the scroll.
+   *
+   * @static
+   * @returns {Number} The width value of the first element
+   */
+  scrollWidth() {
+    return this._oneSelect().scrollWidth;
+  }
+
+  /**
+   * The html element is imported or injected into the element.
+   *
+   * @static
+   * @param {String} Html element
+   * @returns {String|Object} The html element or class Loaf-dom
+   */
+  html(htmlValue = null) {
+    if(!htmlValue) return this._oneSelect().innerHTML;
+    this.element.forEach(el => {
+      el.innerHTML = htmlValue;
+    });
+    return this;
+  }
+
+  /**
+   * The text of the html element is imported or injected into the element.
+   *
+   * @static
+   * @param {String} Html element
+   * @returns {String|Object} Text of html element or Loaf-dom class
+   */
+  text(textValue = null) {
+    if(!textValue) return this._oneSelect().innerText;
+    this.element.forEach(el => {
+      el.innerText = textValue;
+    });
+    return this;
+  }
+
 }
 
 export default (element) => {

@@ -148,4 +148,83 @@ describe('Loaf-DOM Library Test', function() {
     });
   });
 
+  it('click + html', function() {
+    container.innerHTML = `
+      <p id="click"></p>
+    `;
+
+    L('#click').click(function() {
+      L('#click').html('<span>test</span');
+    });
+    L('#click').click();
+
+    expect(L('#click').html()).toEqual('<span>test</span>');
+  });
+
+  it('trigger + text', function() {
+    container.innerHTML = `
+      <p id="click"></p>
+    `;
+
+    let test = '';
+    L('#click').click(function() {
+      L('#click').text('test');
+    });
+    L('#click').trigger('click');
+
+    expect(L('#click').text()).toEqual('test');
+  });
+
+  it('trigger + text', function() {
+    container.innerHTML = `
+      <p id="click"></p>
+    `;
+
+    let test = '';
+    L('#click').click(function() {
+      L('#click').text('test');
+    });
+    L('#click').trigger('click');
+
+    expect(L('#click').text()).toEqual('test');
+  });
+
+  it('width + height', function() {
+    container.innerHTML = `
+      <p id="width-height" style="width: 50px; height: 20px;"></p>
+    `;
+
+    expect(L('#width-height').width()).toEqual(50);
+    expect(L('#width-height').height()).toEqual(20);
+  });
+
+  it('width + height', function() {
+    container.innerHTML = `
+      <p id="width-height" style="width: 50px; height: 20px;"></p>
+    `;
+
+    expect(L('#width-height').width()).toEqual(50);
+    expect(L('#width-height').height()).toEqual(20);
+  });
+
+  it('offset', function() {
+    container.innerHTML = `
+      <p id="position" style="position: fixed; top: 30px; left: 50px; margin: 0;"></p>
+    `;
+
+    expect(L('#position').offset().top).toEqual(30);
+    expect(L('#position').offset().left).toEqual(50);
+  });
+
+  it('scrollTop', function() {
+    container.innerHTML = `
+      <div id="parent" style="height: 100px; overflow: scroll; position: relative;">
+        <p id="position" style="height: 200px;"></p>
+      </div>
+    `;
+
+    L('#parent').el().scrollTop = 100;
+    expect(L('#parent').scrollTop()).toEqual(100);
+  });
+
 });
