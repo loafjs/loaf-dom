@@ -1,10 +1,9 @@
 {
   "name": "loaf-dom",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "dom script library",
   "main": "loaf-dom.js",
   "scripts": {
-    "start": "webpack-dev-server",
     "test": "./node_modules/karma/bin/karma start"
   },
   "repository": {
@@ -15,7 +14,9 @@
     "node": ">=6.0.0"
   },
   "keywords": [
-    "util"
+    "utility",
+    "DOM",
+    "library"
   ],
   "author": "falsy",
   "license": "MIT",
@@ -31,8 +32,6 @@
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.1.2",
     "karma-webpack": "^3.0.5",
-    "webpack": "^4.17.2",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.7"
+    "webpack": "^4.17.2"
   }
 }
