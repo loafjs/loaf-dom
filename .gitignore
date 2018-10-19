@@ -9,4 +9,4 @@ logs
 *.log
 sample/src/loaf-dom.js
 package-lock.json
-./sample
+sample
