@@ -1,4 +1,3 @@
-// version. 0.1.2
 import Easing from './easing';
 
 // Record the iteration of the animation.
