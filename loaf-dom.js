@@ -369,6 +369,8 @@ class LoafDom {
         let time = 0;
         let position = start;
 
+        clearInterval(animation[key]);
+
         animation[key] = setInterval(() => {
           time += 1 / fps;
           position = Easing[easing](time * 100 / secDuration, time, start, variation, secDuration);
