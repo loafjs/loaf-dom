@@ -1,14 +1,15 @@
-# Loaf-DOM ![loaf-dom version](https://img.shields.io/badge/version-v0.1.1-green.svg)
+# Loaf-DOM [![npm](https://img.shields.io/npm/v/loaf-dom.svg)](https://www.npmjs.com/package/loaf-dom) [![npm](https://img.shields.io/npm/dm/loaf-dom.svg)](https://www.npmjs.com/package/loaf-dom)
 A light and fast DOM Script library for clients.
-many browsers do not yet support ES6 +, so you should use it with a compiler such as ['Babel'](https://github.com/babel/babel).
-You can see the sample code using 'Webpack' and 'Babel' in `/sample`.
-
-## Minimum version
-![minimum node version](https://img.shields.io/badge/node-v6.0.0-orange.svg) ![minimum npm version](https://img.shields.io/badge/npm-v3.8.6-orange.svg)
+loaf-dom is written in ES6+ syntax. but many browsers do not yet support ES6 +, so you should use it with a compiler such as ['Babel'](https://github.com/babel/babel).
 
 ## Install
 ```
 npm install --save loaf-dom
+```
+
+## Test
+```
+npm test
 ```
 
 ## Introduction
@@ -78,16 +79,5 @@ L('#animation').animate({left: 500}, 2000, 'easeInCubic', () => console.log('cal
 * [jQuery Easing Plugin](http://gsgd.co.uk/sandbox/jquery/easing/)
 * [Easing functions](https://easings.net/en)
 
-## Test
-```
-npm test
-```
-
-## ChangeLog
-
-#### v0.1.1
-* add method
-(trigger, offset, width, height, scrollTop, scrollLeft, scrollHeight, scrollWidth, html, text)
-
-#### v0.1.0
-* init beta version
+## License
+[MIT](https://github.com/loafjs/loaf-dom/blob/master/LICENSE)
