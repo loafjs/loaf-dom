@@ -18,7 +18,7 @@
     "util"
   ],
   "author": "falsy",
-  "license": "WTFPL",
+  "license": "MIT",
   "bugs": "https://github.com/loafjs/loaf-dom/issues",
   "homepage": "https://falsy.me",
   "devDependencies": {
