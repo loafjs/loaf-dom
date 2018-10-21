@@ -403,6 +403,23 @@ class LoafDom {
   }
 
   /**
+   * Stops all animation effects on the selected element.
+   *
+   * @static
+   * @returns {Object} Class Loaf-DOM
+   */
+  stop() {
+    this.element.forEach(el => {
+      const elmeentID = el.identificationNo;
+      animation[elmeentID] = animation[elmeentID] ? animation[elmeentID] : {};
+      for(let key in animation[elmeentID]) {
+        clearInterval(animation[elmeentID][key]);
+      }
+    });
+    return this;
+  }
+
+  /**
    * Add a scroll event.
    *
    * @static
