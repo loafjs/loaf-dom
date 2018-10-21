@@ -3,12 +3,30 @@ import Easing from './easing';
 // Record the iteration of the animation.
 const animation = {};
 
+// The unique id value to be used for the element
+let identificationNo = 0;
+
 class LoafDom {
 
   constructor(element) {
     this.element = [];
     this._multiSelector(element);
+    this._setElemnetIdfNo();
     return this;
+  }
+
+  /**
+   * Give each element a unique id value.
+   *
+   * @private
+   */
+  _setElemnetIdfNo() {
+    this.element.forEach((el) => {
+      if(typeof el.identificationNo === 'undefined') {
+        identificationNo += 1;
+        el.identificationNo = identificationNo;
+      }
+    });
   }
 
   /**
@@ -357,8 +375,9 @@ class LoafDom {
   animate(option, duration, easing='easeOutSine', callback=null) {
     const fps = 60;
     const secDuration = duration / 1000;
-
     this.element.forEach(el => {
+      const elmeentID = el.identificationNo;
+      animation[elmeentID] = animation[elmeentID] ? animation[elmeentID] : {};
       for(let key in option) {
         const checkTarget = (key === 'scrollLeft' || key === 'scrollTop');
         const target = checkTarget ? el : el.style;
@@ -367,14 +386,12 @@ class LoafDom {
         const finish = option[key];
         let time = 0;
         let position = start;
-
-        clearInterval(animation[key]);
-
-        animation[key] = setInterval(() => {
+        clearInterval(animation[elmeentID][key]);
+        animation[elmeentID][key] = setInterval(() => {
           time += 1 / fps;
           position = Easing[easing](time * 100 / secDuration, time, start, variation, secDuration);
           if ((variation > 0 && position >= finish) || (variation < 0 && position <= finish)) {
-            clearInterval(animation[key]);
+            clearInterval(animation[elmeentID][key]);
             target[key] = checkTarget ? finish : finish + 'px';
             if(callback) callback();
             return;
