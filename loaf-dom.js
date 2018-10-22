@@ -2,8 +2,9 @@ import Easing from './easing';
 
 // Record the iteration of the animation.
 const animation = {};
-
-// The unique id value to be used for the element
+// Record data for delay evaluation.
+const lazyClick = {};
+// The unique id value to be used for the element.
 let identificationNo = 0;
 
 class LoafDom {
@@ -58,16 +59,17 @@ class LoafDom {
    * @returns {Array} Selector with specified parent
    */
   _searchInParent(element, len) {
+    const children = this._arrayElement([], element[len-1]);
+    const cLen = children.length;
     let pass = [];
-    this._roof(len-1, (i) => {
-      const parentEl = this._arrayElement([], element[len-2-i]);
-      const childrenEl = this._arrayElement([], element[len-1-i]);
-      this._roof(childrenEl.length, (i) => {
-        const isParent = this._findInParent(parentEl, childrenEl[i]);
-        if(pass[i] !== false && isParent) pass[i] = this._arrayElement([], element[len-1])[i];
-        else pass[i] = false;
-      });
-    });
+    for(let i=0; i<len-1; i++) {
+      const parent = this._arrayElement([], element[len-2-i]);
+      for(let j=0; j<cLen; j++) {
+        if(pass[j] !== false) {
+          pass[j] = this._findInParent(parent, children[j]) ? children[j] : false;
+        }
+      }
+    }
     return pass;
   }
 
@@ -100,7 +102,9 @@ class LoafDom {
     const select = this._select(element);
     if(!select) return store;
     if(!select.length) return this._concat(store, select);
-    this._roof(select.length, i => store = this._concat(store, select[i]));
+    for(const target of select) {
+      store = this._concat(store, target);
+    }
     return store;
   }
 
@@ -154,20 +158,6 @@ class LoafDom {
   }
 
   /**
-   * Perform a loop.
-   *
-   * @private
-   * @param {Number} Number of iterations
-   * @param {Functions} Functions to be repeated
-   */
-  _roof(len, fnc) {
-    let i;
-    for(i=0; i<len; i++) {
-      fnc(i);
-    }
-  }
-
-  /**
    * Adds a new selector array or a new selector element to an existing selector array.
    *
    * @private
@@ -213,7 +203,7 @@ class LoafDom {
    * @returns {Object} Select the dom element
    */
   el(idx) {
-    return typeof idx === 'undefined' ? this.element[0] : this.element[idx];
+    return typeof idx === 'number' ? this.element[idx] : this.element[0];
   }
 
   /**
@@ -234,6 +224,7 @@ class LoafDom {
    * @returns {Object} Class Loaf-DOM
    */
   eq(idx) {
+    idx = typeof idx === 'number' ? idx : 0;
     this.element = this.element.splice(idx, 1);
     return this;
   }
@@ -294,7 +285,7 @@ class LoafDom {
    */
   style(key, value=null) {
     if(!value) return this._oneSelect().style[key];
-    this.element.forEach(el => el.style[key] = value );
+    this.element.forEach(el => el.style[key] = value);
     return this;
   }
 
@@ -339,11 +330,10 @@ class LoafDom {
     const selectChildEl = this._arrayElement([], selectChild);
     let store = [];
     this.element.forEach(el => {
-      const child = el.children;
-      this._roof(child.length, i => {
-        if(!selectChild) return store = this._concat(store, child[i]);
-        if(selectChildEl.indexOf(child[i]) !== -1) store = this._concat(store, child[i]);
-      });
+      for(const child of el.children) {
+        if(!selectChild) store = this._concat(store, child);
+        if(selectChild && selectChildEl.indexOf(child) !== -1) store = this._concat(store, child);
+      }
     });
     return new LoafDom(store);
   }
@@ -376,8 +366,8 @@ class LoafDom {
     const fps = 60;
     const secDuration = duration / 1000;
     this.element.forEach(el => {
-      const elmeentID = el.identificationNo;
-      animation[elmeentID] = animation[elmeentID] ? animation[elmeentID] : {};
+      const elementID = el.identificationNo;
+      animation[elementID] = animation[elementID] ? animation[elementID] : {};
       for(let key in option) {
         const checkTarget = (key === 'scrollLeft' || key === 'scrollTop');
         const target = checkTarget ? el : el.style;
@@ -386,12 +376,12 @@ class LoafDom {
         const finish = option[key];
         let time = 0;
         let position = start;
-        clearInterval(animation[elmeentID][key]);
-        animation[elmeentID][key] = setInterval(() => {
+        clearInterval(animation[elementID][key]);
+        animation[elementID][key] = setInterval(() => {
           time += 1 / fps;
           position = Easing[easing](time * 100 / secDuration, time, start, variation, secDuration);
           if ((variation > 0 && position >= finish) || (variation < 0 && position <= finish)) {
-            clearInterval(animation[elmeentID][key]);
+            clearInterval(animation[elementID][key]);
             target[key] = checkTarget ? finish : finish + 'px';
             if(callback) callback();
             return;
@@ -410,10 +400,10 @@ class LoafDom {
    */
   stop() {
     this.element.forEach(el => {
-      const elmeentID = el.identificationNo;
-      animation[elmeentID] = animation[elmeentID] ? animation[elmeentID] : {};
-      for(let key in animation[elmeentID]) {
-        clearInterval(animation[elmeentID][key]);
+      const elementID = el.identificationNo;
+      animation[elementID] = animation[elementID] ? animation[elementID] : {};
+      for(let key in animation[elementID]) {
+        clearInterval(animation[elementID][key]);
       }
     });
     return this;
@@ -445,6 +435,32 @@ class LoafDom {
     this.element.forEach(el => {
       if(callback) el.addEventListener('click', callback);
       else el.click();
+    });
+    return this;
+  }
+
+  /**
+   * Register a click event that prevents short double clicks.
+   *
+   * @static
+   * @param {Function} callback function
+   * @returns {Object} Class Loaf-DOM
+   */
+  oneClick(callback = null) {
+    this.element.forEach(el => {
+      const elementID = el.identificationNo;
+      if(callback) {
+        el.addEventListener('click', () => {
+          if(lazyClick[elementID]) return;
+          lazyClick[elementID] = true;
+          setTimeout(() => {
+            lazyClick[elementID] = false;
+          }, 300);
+          callback();
+        });
+      } else {
+        el.click();
+      }
     });
     return this;
   }
