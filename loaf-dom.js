@@ -11,9 +11,51 @@ class LoafDom {
 
   constructor(element) {
     this.element = [];
-    this._multiSelector(element);
+    this._selectElement(element);
     this._setElemnetIdfNo();
     return this;
+  }
+
+  /**
+   * Put selected element in class.
+   *
+   * @private
+   * @param {String} Element selector
+   */
+  _selectElement(element) {
+    if(typeof element === 'object') {
+      this.element = element;
+    }
+
+    if(typeof element === 'string') {
+      this.element = this._select(element);
+    }
+  }
+
+  /**
+   * Finds the element in the DOM by separating the selector string.
+   *
+   * @private
+   * @param {String} Element selector
+   * @returns {Object} Element selector
+   */
+  _select(element) {
+    element = element.trim();
+    if(/\,|\>|:| /.test(element)) {
+      element = this._arrayElement([], document.querySelectorAll(element));
+    } else {
+      switch(element[0]) {
+        case '#' :
+          element = this._arrayElement([], document.getElementById(element.substring(1)));
+          break;
+        case '.' :
+          element = this._arrayElement([], document.getElementsByClassName(element.substring(1)));
+          break;
+        default :
+          element = this._arrayElement([], document.getElementsByTagName(element));
+      }
+    }
+    return element;
   }
 
   /**
@@ -31,46 +73,21 @@ class LoafDom {
   }
 
   /**
-   * Select the dom selector for the inherited relationship entered as blank
+   * Returns an array of the corresponding elements of the selector
    *
    * @private
+   * @param {Array} Default array to save
    * @param {String} Element selector
+   * @returns {Array} Element selector array
    */
-  _inheritSelector(selector) {
-    const el = selector.split(' ');
-    const len = el.length;
-
-    if(len === 1) {
-      this.element = this._arrayElement(this.element, el[0]);
+  _arrayElement(store, element) {
+    // const select = this._select(element);
+    if(!element) return store;
+    if(!element.length) return this._concat(store, element);
+    for(const target of element) {
+      store = this._concat(store, target);
     }
-
-    if(len > 1) {
-      const pass = this._searchInParent(el, len);
-      this.element = this._concat(this.element, pass.filter(Boolean));
-    }
-  }
-
-  /**
-   * Find child elements that satisfy all inheritance criteria.
-   *
-   * @private
-   * @param {Array} Selectors of inheritance
-   * @param {Number} Number of selectors of inheritance
-   * @returns {Array} Selector with specified parent
-   */
-  _searchInParent(element, len) {
-    const children = this._arrayElement([], element[len-1]);
-    const cLen = children.length;
-    let pass = [];
-    for(let i=0; i<len-1; i++) {
-      const parent = this._arrayElement([], element[len-2-i]);
-      for(let j=0; j<cLen; j++) {
-        if(pass[j] !== false) {
-          pass[j] = this._findInParent(parent, children[j]) ? children[j] : false;
-        }
-      }
-    }
-    return pass;
+    return store;
   }
 
   /**
@@ -91,70 +108,13 @@ class LoafDom {
   }
 
   /**
-   * Returns an array of the corresponding elements of the selector
-   *
-   * @private
-   * @param {Array} Default array to save
-   * @param {String} Element selector
-   * @returns {Array} Element selector array
-   */
-  _arrayElement(store, element) {
-    const select = this._select(element);
-    if(!select) return store;
-    if(!select.length) return this._concat(store, select);
-    for(const target of select) {
-      store = this._concat(store, target);
-    }
-    return store;
-  }
-
-  /**
-   * Find the element by dividing the selector separated by commas.
-   *
-   * @private
-   * @param {String} Element selector
-   */
-  _multiSelector(element) {
-    if(typeof element === 'string') {
-      const el = element.split(',');
-      el.forEach(selectorStr => this._inheritSelector(selectorStr.trim()));
-    }
-
-    if(typeof element === 'object') {
-      this.element = element;
-    }
-  }
-
-  /**
-   * Finds the element in the DOM by separating the selector string.
-   *
-   * @private
-   * @param {String} Element selector
-   * @returns {Object} Element selector
-   */
-  _select(element) {
-    if(typeof element !== 'string') return;
-    switch(element[0]) {
-      case '#' :
-        element = document.getElementById(element.substring(1));
-        break;
-      case '.' :
-        element = document.getElementsByClassName(element.substring(1));
-        break;
-      default :
-        element = document.getElementsByTagName(element);
-    }
-    return element;
-  }
-
-  /**
    * Returns the first of the selected elements.
    *
    * @private
    * @returns {Object} First element selector
    */
    _oneSelect() {
-    return this.element[0];
+    return this.element.length ? this.element[0] : this.element;
   }
 
   /**
@@ -225,7 +185,7 @@ class LoafDom {
    */
   eq(idx) {
     idx = typeof idx === 'number' ? idx : 0;
-    this.element = this.element.splice(idx, 1);
+    this.element = [this.element[idx]];
     return this;
   }
 
@@ -327,12 +287,17 @@ class LoafDom {
    * @returns {Object} New selector dom class
    */
   children(selectChild) {
-    const selectChildEl = this._arrayElement([], selectChild);
     let store = [];
     this.element.forEach(el => {
       for(const child of el.children) {
-        if(!selectChild) store = this._concat(store, child);
-        if(selectChild && selectChildEl.indexOf(child) !== -1) store = this._concat(store, child);
+        if(!selectChild) {
+          store = this._concat(store, child);
+        } else {
+          const selectChildEl = this._arrayElement([], this._select(selectChild));
+          if(selectChildEl.indexOf(child) !== -1) {
+            store = this._concat(store, child);
+          }
+        }
       }
     });
     return new LoafDom(store);
@@ -346,7 +311,7 @@ class LoafDom {
    * @returns {Object} New selector dom class
    */
   parents(selectParent) {
-    const selectParentEl = this._arrayElement([], selectParent);
+    const selectParentEl = this._arrayElement([], this._select(selectParent));
     let store = [];
     this.element.forEach(el => {
       store = this._concat(store, this._findInParent(selectParentEl, el));

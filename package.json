@@ -1,7 +1,7 @@
 {
   "name": "loaf-dom",
-  "version": "0.1.4",
-  "description": "dom script library",
+  "version": "0.1.5",
+  "description": "A light and fast DOM script library for front-end development",
   "main": "loaf-dom.js",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start"
@@ -16,7 +16,8 @@
   "keywords": [
     "utility",
     "DOM",
-    "library"
+    "library",
+    "front-end"
   ],
   "author": "falsy",
   "license": "MIT",
