@@ -61,16 +61,21 @@ class LoafDom {
   _searchInParent(element, len) {
     const children = this._arrayElement([], element[len-1]);
     const cLen = children.length;
-    let pass = [];
+    let passMap = new Map();
     for(let i=0; i<len-1; i++) {
       const parent = this._arrayElement([], element[len-2-i]);
-      for(let j=0; j<cLen; j++) {
-        if(pass[j] !== false) {
-          pass[j] = this._findInParent(parent, children[j]) ? children[j] : false;
+      if(i === 0) {
+        for(let j=0; j<cLen; j++) {
+          if(this._findInParent(parent, children[j])) passMap.set(j, children[j]);
         }
+      } else {
+        passMap.forEach((el, key) => {
+          if(!this._findInParent(parent, el)) passMap.delete(key);
+        });
       }
     }
-    return pass;
+
+    return [...passMap.values()];
   }
 
   /**
