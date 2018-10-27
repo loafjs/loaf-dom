@@ -38,4 +38,17 @@ describe('Test DOM elements with selectors', () => {
     expect(L('#wrap').style(key)).toEqual(value);
   });
 
+  it('get, set text()', () => {
+    const text = 'add text';
+    L('h1').text(text);
+
+    expect(L('h1').text()).toEqual(text);
+  });
+
+  it('get, set html()', () => {
+    const html = '<span>add html</span>';
+    L('h1').html(html);
+
+    expect(L('h1').html()).toEqual(html);
+  });
 });
