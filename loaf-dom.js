@@ -280,6 +280,22 @@ class LoafDom {
   }
 
   /**
+   * Selecting an input element among the parent elements
+   *
+   * @static
+   * @param {String} Parent element selector
+   * @returns {Object} New selector dom class
+   */
+  parents(selectParent) {
+    const selectParentEl = this._arrayElement([], this._select(selectParent));
+    let store = [];
+    this.element.forEach(el => {
+      store = this._concat(store, this._findInParent(selectParentEl, el));
+    });
+    return new LoafDom(store);
+  }
+
+  /**
    * Select any of the child elements.
    *
    * @static
@@ -299,22 +315,6 @@ class LoafDom {
           }
         }
       }
-    });
-    return new LoafDom(store);
-  }
-
-  /**
-   * Selecting an input element among the parent elements
-   *
-   * @static
-   * @param {String} Parent element selector
-   * @returns {Object} New selector dom class
-   */
-  parents(selectParent) {
-    const selectParentEl = this._arrayElement([], this._select(selectParent));
-    let store = [];
-    this.element.forEach(el => {
-      store = this._concat(store, this._findInParent(selectParentEl, el));
     });
     return new LoafDom(store);
   }
