@@ -16,6 +16,10 @@ class LoafDom {
     return this;
   }
 
+  version() {
+    return '0.1.7';
+  }
+
   /**
    * Put selected element in class.
    *
@@ -105,6 +109,17 @@ class LoafDom {
       cacheParent = cacheParent.parentNode;
     }
     return null;
+  }
+
+  /**
+   * If the value is a function, it executes the function and returns the return value.
+   *
+   * @private
+   * @param {String|Number|Function} Value or response value
+   * @returns {Number|String} Final value
+   */
+  _finishValue(value) {
+    return typeof value === 'function' ? value() : value;
   }
 
   /**
@@ -231,7 +246,7 @@ class LoafDom {
    */
   attr(key, value=null) {
     if(!value) return this._oneSelect().getAttribute(key);
-    this._oneSelect().setAttribute(key, value);
+    this._oneSelect().setAttribute(key, this._finishValue(value));
     return this;
   }
 
@@ -245,7 +260,7 @@ class LoafDom {
    */
   style(key, value=null) {
     if(!value) return this._oneSelect().style[key];
-    this.element.forEach(el => el.style[key] = value);
+    this.element.forEach(el => el.style[key] = this._finishValue(value));
     return this;
   }
 
@@ -280,22 +295,6 @@ class LoafDom {
   }
 
   /**
-   * Selecting an input element among the parent elements
-   *
-   * @static
-   * @param {String} Parent element selector
-   * @returns {Object} New selector dom class
-   */
-  parents(selectParent) {
-    const selectParentEl = this._arrayElement([], this._select(selectParent));
-    let store = [];
-    this.element.forEach(el => {
-      store = this._concat(store, this._findInParent(selectParentEl, el));
-    });
-    return new LoafDom(store);
-  }
-
-  /**
    * Select any of the child elements.
    *
    * @static
@@ -315,6 +314,22 @@ class LoafDom {
           }
         }
       }
+    });
+    return new LoafDom(store);
+  }
+
+  /**
+   * Selecting an input element among the parent elements
+   *
+   * @static
+   * @param {String} Parent element selector
+   * @returns {Object} New selector dom class
+   */
+  parents(selectParent) {
+    const selectParentEl = this._arrayElement([], this._select(selectParent));
+    let store = [];
+    this.element.forEach(el => {
+      store = this._concat(store, this._findInParent(selectParentEl, el));
     });
     return new LoafDom(store);
   }
@@ -457,43 +472,54 @@ class LoafDom {
   }
 
   /**
-   * Returns the width value of the element.
+   * Returns or injects the width value of the element.
    *
    * @static
-   * @returns {Number} The width value of the first element
+   * @param {String|Function} set element width value
+   * @returns {Number|Object} The width value of the first element | Class Loaf-DOM
    */
-  width() {
-    return this._oneSelect().clientWidth;
+  width(widthValue = null) {
+    if(!widthValue) return this._oneSelect().clientWidth;
+    this.style('width', this._finishValue(widthValue));
+    return this;
   }
 
   /**
-   * Returns the height value of the element.
+   * Returns or injects the height value of the element.
    *
    * @static
-   * @returns {Number} The height value of the first element
+   * @param {String|Function} set element height value
+   * @returns {Number|Object} The height value of the first element | Class Loaf-DOM
    */
-  height() {
-    return this._oneSelect().clientHeight;
+  height(heightValue = null) {
+    if(!heightValue) return this._oneSelect().clientHeight;
+    this.style('width', this._finishValue(heightValue));
+    return this;
   }
 
   /**
-   * Returns the scroll position of the top of the element.
+   * Responds to or injects the value of the element's top scroll position.
    *
    * @static
-   * @returns {Number} The scroll position of the top of the element
+   * @param {Number|Function} set element scroll top value
+   * @returns {Number|Object} The scroll position of the top of the element | Class Loaf-DOM
    */
-  scrollTop() {
-    return this._oneSelect().scrollTop;
+  scrollTop(positionValue = null) {
+    if(!positionValue) return this._oneSelect().scrollTop;
+    this._oneSelect().scrollTop = this._finishValue(positionValue);
+    return this;
   }
 
   /**
-   * Returns the scroll position of the left of the element.
+   * Responds to or injects the value of the element's left scroll position.
    *
    * @static
-   * @returns {Number} The scroll position of the left of the element
+   * @param {Number|Function} set element scroll left value
+   * @returns {Number|Object} The scroll position of the left of the element | Class Loaf-DOM
    */
-  scrollLeft() {
-    return this._oneSelect().scrollLeft;
+  scrollLeft(positionValue = null) {
+    if(!positionValue) return this._oneSelect().scrollLeft;
+    return this._oneSelect().scrollLeft = this._finishValue(positionValue);
   }
 
   /**
@@ -526,7 +552,7 @@ class LoafDom {
   html(htmlValue = null) {
     if(!htmlValue) return this._oneSelect().innerHTML;
     this.element.forEach(el => {
-      el.innerHTML = htmlValue;
+      el.innerHTML = this._finishValue(htmlValue);
     });
     return this;
   }
@@ -541,7 +567,7 @@ class LoafDom {
   text(textValue = null) {
     if(!textValue) return this._oneSelect().innerText;
     this.element.forEach(el => {
-      el.innerText = textValue;
+      el.innerText = this._finishValue(textValue);
     });
     return this;
   }
