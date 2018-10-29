@@ -30,10 +30,26 @@ describe('Test DOM elements with selectors', () => {
     expect(L('#wrap').attr(key)).toEqual(value);
   });
 
+  it('get, set attr() - function value', () => {
+    const key = 'key';
+    const value = 'value';
+    L('#wrap').attr(key, () => value);
+
+    expect(L('#wrap').attr(key)).toEqual(value);
+  });
+
   it('get, set style()', () => {
     const key = 'background';
     const value = 'blue';
     L('#wrap').style(key, value);
+
+    expect(L('#wrap').style(key)).toEqual(value);
+  });
+
+  it('get, set style() - function value', () => {
+    const key = 'background';
+    const value = 'blue';
+    L('#wrap').style(key, () => value);
 
     expect(L('#wrap').style(key)).toEqual(value);
   });
@@ -45,9 +61,23 @@ describe('Test DOM elements with selectors', () => {
     expect(L('h1').text()).toEqual(text);
   });
 
+  it('get, set text() - function value', () => {
+    const text = 'add text';
+    L('h1').text(() => text);
+
+    expect(L('h1').text()).toEqual(text);
+  });
+
   it('get, set html()', () => {
     const html = '<span>add html</span>';
     L('h1').html(html);
+
+    expect(L('h1').html()).toEqual(html);
+  });
+
+  it('get, set html() - function value', () => {
+    const html = '<span>add html</span>';
+    L('h1').html(() => html);
 
     expect(L('h1').html()).toEqual(html);
   });
