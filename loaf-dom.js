@@ -10,14 +10,11 @@ let identificationNo = 0;
 class LoafDom {
 
   constructor(element) {
+    this.version = '0.1.8';
     this.element = [];
     this._selectElement(element);
     this._setElemnetIdfNo();
     return this;
-  }
-
-  version() {
-    return '0.1.7';
   }
 
   /**
@@ -519,7 +516,8 @@ class LoafDom {
    */
   scrollLeft(positionValue = null) {
     if(!positionValue) return this._oneSelect().scrollLeft;
-    return this._oneSelect().scrollLeft = this._finishValue(positionValue);
+    this._oneSelect().scrollLeft = this._finishValue(positionValue);
+    return this;
   }
 
   /**
