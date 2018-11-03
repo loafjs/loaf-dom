@@ -10,11 +10,22 @@ let identificationNo = 0;
 class LoafDom {
 
   constructor(element) {
-    this.version = '0.1.8';
+    this.version = '0.1.9';
     this.element = [];
     this._selectElement(element);
+    if(!this.element.length) this._error(1, 'constructor()');
+
     this._setElemnetIdfNo();
     return this;
+  }
+
+  /**
+   * Print an error message
+   *
+   * @private
+   */
+  _error(type, method) {
+    if(type === 1) console.warn(`No elements selected by ${method}`);
   }
 
   /**
@@ -43,17 +54,20 @@ class LoafDom {
   _select(element) {
     element = element.trim();
     if(/\,|\>|:| /.test(element)) {
-      element = this._arrayElement([], document.querySelectorAll(element));
+      if(!document.querySelectorAll(element).length) element = [];
+      else element = this._arrayElement([], document.querySelectorAll(element));
     } else {
       switch(element[0]) {
         case '#' :
           element = this._arrayElement([], document.getElementById(element.substring(1)));
           break;
         case '.' :
-          element = this._arrayElement([], document.getElementsByClassName(element.substring(1)));
+          if(!document.getElementsByClassName(element.substring(1)).length) element = [];
+          else element = this._arrayElement([], document.getElementsByClassName(element.substring(1)));
           break;
         default :
-          element = this._arrayElement([], document.getElementsByTagName(element));
+          if(!document.getElementsByTagName(element).length) element = [];
+          else element = this._arrayElement([], document.getElementsByTagName(element));
       }
     }
     return element;
@@ -175,9 +189,10 @@ class LoafDom {
    * @returns {Object} Select the dom element
    */
   el(idx) {
-    return typeof idx === 'number' ? this.element[idx] : this.element[0];
+    idx = typeof idx === 'number' ? idx : 0;
+    if(!this.element.length || typeof this.element[idx] === 'undefined') return this._error(1, 'el()');
+    return this.element[idx];
   }
-
   /**
    * Returns the number of currently selected elements
    *
@@ -197,7 +212,8 @@ class LoafDom {
    */
   eq(idx) {
     idx = typeof idx === 'number' ? idx : 0;
-    this.element = [this.element[idx]];
+    if(!this.element.length || typeof this.element[idx] === 'undefined') this._error(1, 'eq()');
+    else this.element = [this.element[idx]];
     return this;
   }
 
@@ -387,6 +403,21 @@ class LoafDom {
   }
 
   /**
+   * Add a event.
+   *
+   * @static
+   * @param {Function} add event name
+   * @param {Function} callback function
+   * @returns {Object} Class Loaf-DOM
+   */
+  addEvent(eventName, callback) {
+    this.element.forEach(el => {
+      el.addEventListener(eventName, callback)
+    });
+    return this;
+  }
+
+  /**
    * Add a scroll event.
    *
    * @static
@@ -452,7 +483,7 @@ class LoafDom {
   trigger(eventName = null) {
     if(!eventName) return this;
     this.element.forEach(el => {
-      if(el[eventName]) el[eventName]();
+      if(typeof el[eventName] !== 'undefined') el[eventName]();
     });
     return this;
   }
