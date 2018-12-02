@@ -1,6 +1,6 @@
 {
   "name": "loaf-dom",
-  "version": "0.1.9",
+  "version": "0.2.1",
   "description": "A light and fast DOM script library for front-end development",
   "main": "loaf-dom.js",
   "scripts": {
@@ -22,7 +22,7 @@
   "author": "falsy",
   "license": "MIT",
   "bugs": "https://github.com/loafjs/loaf-dom/issues",
-  "homepage": "https://falsy.me",
+  "homepage": "https://lab.falsy.me",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
