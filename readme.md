@@ -1,6 +1,9 @@
-# Loaf-DOM [![npm](https://img.shields.io/npm/v/loaf-dom.svg)](https://www.npmjs.com/package/loaf-dom) [![npm](https://img.shields.io/npm/dt/loaf-dom.svg)](https://www.npmjs.com/package/loaf-dom)
+# Loaf-DOM [![npm](https://img.shields.io/npm/v/loaf-dom.svg)](https://www.npmjs.com/package/loaf-dom) [![npm](https://img.shields.io/npm/dm/loaf-dom.svg)](https://www.npmjs.com/package/loaf-dom)
 A light and fast DOM script library for front-end development.
 loaf-dom is written in ES6+ syntax. but many browsers do not yet support ES6+, so you have to use [Webpack](https://webpack.js.org/), [Babel](https://github.com/babel/babel) library.
+
+## Notice
+This is unstable because it is an early version.
 
 ## Install
 ```
