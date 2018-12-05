@@ -69,6 +69,7 @@ console.log(L('p').el(1).innerText);
 
 ## Use easing value in animation
 i use jQuery Easing as a plugin, and I can use some easing values. (default: easeOutSine)
+(However, the animate function is still lacking.)
 ```
 easeInQuad, easeOutQuad, easeInOutQuad, easeInCubic, easeOutCubic, easeInOutCubic, easeInQuart, easeOutQuart, easeInOutQuart, easeInQuint, easeOutQuint, easeInOutQuint, easeInSine, easeOutSine, easeInOutSine, easeInExpo, easeOutExpo, easeInOutExpo, easeInCirc, easeOutCirc, easeInOutCirc
 ```
