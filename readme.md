@@ -15,6 +15,18 @@ npm install --save loaf-dom
 npm test
 ```
 
+## Example
+You can go to the 'example' directory, install the example source, and check the run.
+```
+cd ./example
+```
+```
+npm install
+```
+```
+npm start
+```
+
 ## Introduction
 ```html
 <body>
@@ -78,18 +90,6 @@ easeInQuad, easeOutQuad, easeInOutQuad, easeInCubic, easeOutCubic, easeInOutCubi
 import L from 'loaf-dom';
 
 L('#animation').animate({left: 500}, 2000, 'easeInCubic', () => console.log('callback'));
-```
-
-## Example
-You can go to the 'example' directory, install the example source, and check the run.
-```
-cd ./example
-```
-```
-npm install
-```
-```
-npm start
 ```
 
 #### Reference
