@@ -79,6 +79,19 @@ import L from 'loaf-dom';
 
 L('#animation').animate({left: 500}, 2000, 'easeInCubic', () => console.log('callback'));
 ```
+
+## Example
+You can go to the 'example' directory, install the example source, and check the run.
+```
+cd ./example
+```
+```
+npm install
+```
+```
+npm start
+```
+
 #### Reference
 * [jQuery Easing Plugin](http://gsgd.co.uk/sandbox/jquery/easing/)
 * [Easing functions](https://easings.net/en)
