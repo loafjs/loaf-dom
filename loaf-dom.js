@@ -91,7 +91,6 @@ const _selectElement = (LD, element) => {
  * @param {Object} Loaf-dom class
  */
 const _setElemnetIdfNo = (LD) => {
-  console.log(LD.element);
   LD.element.forEach((el) => {
     if(typeof el.identificationNo === 'undefined') {
       identificationNo += 1;
@@ -419,11 +418,12 @@ class LoafDom {
    * @static
    * @param {Function} add event name
    * @param {Function} callback function
+   * @param {Object} Options
    * @returns {Object} Class Loaf-DOM
    */
-  event(eventName, callback) {
+  event(eventName, callback, options) {
     this.element.forEach(el => {
-      el.addEventListener(eventName, callback)
+      el.addEventListener(eventName, callback, options);
     });
     return this;
   }
