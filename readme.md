@@ -3,7 +3,8 @@ A light and fast DOM script library for front-end development.
 loaf-dom is written in ES6+ syntax. but many browsers do not yet support ES6+, so you have to use [Webpack](https://webpack.js.org/), [Babel](https://github.com/babel/babel) library.
 
 ## Notice
-This is unstable because it is an early version.
+This is unstable because it is an early version.  
+There are many disadvantages. I look forward to intellectual and code review. Thank you.
 
 ## Install
 ```
@@ -80,7 +81,7 @@ console.log(L('p').el(1).innerText);
 ```
 
 ## Use easing value in animation
-i use jQuery Easing as a plugin, and I can use some easing values. (default: easeOutSine)
+i use jQuery Easing as a plugin, and I can use some easing values. (default: easeOutSine)  
 (However, the animate function is still lacking.)
 ```
 easeInQuad, easeOutQuad, easeInOutQuad, easeInCubic, easeOutCubic, easeInOutCubic, easeInQuart, easeOutQuart, easeInOutQuart, easeInQuint, easeOutQuint, easeInOutQuint, easeInSine, easeOutSine, easeInOutSine, easeInExpo, easeOutExpo, easeInOutExpo, easeInCirc, easeOutCirc, easeInOutCirc

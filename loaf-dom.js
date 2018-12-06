@@ -140,10 +140,13 @@ const _findInParent = (parent, children) => {
  *
  * @private
  * @param {String|Number|Function} Value or response value
- * @returns {Number|String} Final value
+ * @param {Boolean} For Number, the default unit is px
+ * @returns {String|Number} Final value
  */
-const _finishValue = (value) => {
-  return typeof value === 'function' ? value() : value;
+const _finishValue = (value, defaultPx=false) => {
+  value = typeof value === 'function' ? value() : value;
+  if(defaultPx) value = typeof value === 'number' ? value + 'px' : value;
+  return value;
 };
 
 /**
@@ -283,7 +286,7 @@ class LoafDom {
    */
   style(key, value=null) {
     if(!value) return _oneSelect(this).style[key];
-    this.element.forEach(el => el.style[key] = _finishValue(value));
+    this.element.forEach(el => el.style[key] = _finishValue(value, true));
     return this;
   }
 
@@ -519,7 +522,7 @@ class LoafDom {
    */
   width(widthValue = null) {
     if(!widthValue) return _oneSelect(this).clientWidth;
-    this.style('width', _finishValue(widthValue));
+    this.style('width', _finishValue(widthValue, true));
     return this;
   }
 
@@ -532,7 +535,7 @@ class LoafDom {
    */
   height(heightValue = null) {
     if(!heightValue) return _oneSelect(this).clientHeight;
-    this.style('width', _finishValue(heightValue));
+    this.style('height', _finishValue(heightValue, true));
     return this;
   }
 

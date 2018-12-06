@@ -43,6 +43,14 @@ describe('Test DOM elements with selectors', () => {
     expect(L('#wrap').width()).toEqual(target.clientWidth);
   });
 
+  it('set width() - number', () => {
+    const target = document.getElementById('wrap');
+    const width = 100;
+    L('#wrap').width(width);
+
+    expect(L('#wrap').width()).toEqual(target.clientWidth);
+  });
+
   it('height()', () => {
     const target = document.getElementById('wrap');
 
@@ -53,16 +61,23 @@ describe('Test DOM elements with selectors', () => {
     const target = document.getElementById('wrap');
     const height = '100px';
     L('#wrap').width(height);
-
     expect(L('#wrap').height()).toEqual(target.clientHeight);
   });
 
   it('set height() - function value', () => {
     const target = document.getElementById('wrap');
     const height = '200px';
-    L('#wrap').width(() => height);
+    L('#wrap').height(() => height);
 
     expect(L('#wrap').height()).toEqual(target.clientHeight);
+  });
+
+  it('set height() - Number', () => {
+    const target = document.getElementById('wrap');
+    const height = 100;
+    L('#wrap').height(height);
+
+    expect(L('#wrap').height()).toEqual(height);
   });
 
   it('scrollTop()', () => {
