@@ -35,6 +35,6 @@
     "webpack-dev-server": "^3.1.10"
   },
   "dependencies": {
-    "loaf-dom": "^0.2.7"
+    "loaf-dom": "^0.3.0"
   }
 }

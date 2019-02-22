@@ -10,8 +10,8 @@ L('h1').next().style('padding', '10px 20px');
 
 L('span').addClass('point-color');
 
-L('p + p').style('margin-top', '10px').animate({ 'marginTop': 50 }, 3000, 'easeOutCubic');
+L('p + p').style('margin-top', '10px').animate({ 'marginTop': 50 }, 5000,);
 
 L(document).event('click', () => {
-	alert('click');
+	L('p + p').stop();
 });

@@ -4,7 +4,7 @@ loaf-dom is written in ES6+ syntax. but many browsers do not yet support ES6+, s
 
 ## Notice
 This is unstable because it is an early version.  
-There are many disadvantages. I look forward to intellectual and code review. Thank you.
+There are many disadvantages. I look forward to advice and code reviews. thank you.
 
 ## Install
 ```
@@ -81,7 +81,8 @@ console.log(L('p').el(1).innerText);
 ```
 
 ## Use velocity.js library
-Use the Velocity.js library for high-performance animation.  
+For the Animate method, used the velocity.js library.  
+Velocity.js library for high-performance animation.  
 ```js
 import L from 'loaf-dom';
 
