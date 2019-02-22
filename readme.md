@@ -81,8 +81,7 @@ console.log(L('p').el(1).innerText);
 ```
 
 ## Use velocity.js library
-For the Animate method, used the velocity.js library.  
-Velocity.js library for high-performance animation.  
+Used the Velocity.js library for high-performance animation. Please refer to the official website for the various settings and usage of Velocity.js
 ```js
 import L from 'loaf-dom';
 
