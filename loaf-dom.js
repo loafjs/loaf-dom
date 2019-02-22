@@ -1,12 +1,4 @@
-import Easing from './easing';
-
-// Record the iteration of the animation.
-const animation = {};
-// Record data for delay evaluation.
-const lazyClick = {};
-// The unique id value to be used for the element.
-let identificationNo = 0;
-
+import velocity from 'velocity-animate';
 
 /**
  * Print an error message
@@ -82,21 +74,6 @@ const _selectElement = (LD, element) => {
   if(typeof element === 'string') {
     LD.element = _select(element);
   }
-};
-
-/**
- * Give each element a unique id value.
- *
- * @private
- * @param {Object} Loaf-dom class
- */
-const _setElemnetIdfNo = (LD) => {
-  LD.element.forEach((el) => {
-    if(typeof el.identificationNo === 'undefined') {
-      identificationNo += 1;
-      el.identificationNo = identificationNo;
-    }
-  });
 };
 
 /**
@@ -190,7 +167,6 @@ class LoafDom {
     _selectElement(this, element);
     if(!this.element.length) _error(1, 'constructor()');
 
-    _setElemnetIdfNo(this);
     return this;
   }
 
@@ -221,7 +197,7 @@ class LoafDom {
    *
    * @static
    * @param {Number} Order of elements to select
-   * @returns {Object} Class Loaf-DOM
+   * @returns {Object} New class Loaf-DOM
    */
   eq(idx) {
     idx = typeof idx === 'number' ? idx : 0;
@@ -235,7 +211,7 @@ class LoafDom {
    *
    * @static
    * @param {Array} An array of class names
-   * @returns {Object} Class Loaf-DOM
+   * @returns {Object} New class Loaf-DOM
    */
   addClass(...className) {
     const el = _oneSelect(this);
@@ -250,7 +226,7 @@ class LoafDom {
    *
    * @static
    * @param {String} Class name
-   * @returns {Object} Class Loaf-DOM
+   * @returns {Object} New class Loaf-DOM
    */
   removeClass(className) {
     const arrayClassName = _compactSplit(className, ' ');
@@ -268,7 +244,7 @@ class LoafDom {
    * @static
    * @param {String} Attribute Key Name
    * @param {String|Null} Attribute Value
-   * @returns {Object|String} Class Loaf-DOM or Attribute Value
+   * @returns {Object|String} New class Loaf-DOM or Attribute Value
    */
   attr(key, value=null) {
     if(!value) return _oneSelect(this).getAttribute(key);
@@ -282,7 +258,7 @@ class LoafDom {
    * @static
    * @param {String} Style Key Name
    * @param {String|Null} Style Value
-   * @returns {Object|String} Class Loaf-DOM or Style Value
+   * @returns {Object|String} New class Loaf-DOM or Style Value
    */
   style(key, value=null) {
     if(!value) return _oneSelect(this).style[key];
@@ -297,7 +273,7 @@ class LoafDom {
    * @returns {Object} New selector dom class
    */
   next() {
-    return new LoafDom(this.element.map(el => el.nextElementSibling).filter(Boolean));
+    return new this.constructor(this.element.map(el => el.nextElementSibling).filter(Boolean));
   }
 
   /**
@@ -307,7 +283,7 @@ class LoafDom {
    * @returns {Object} New selector dom class
    */
   prev() {
-    return new LoafDom(this.element.map(el => el.previousElementSibling).filter(Boolean));
+    return new this.constructor(this.element.map(el => el.previousElementSibling).filter(Boolean));
   }
 
   /**
@@ -317,7 +293,7 @@ class LoafDom {
    * @returns {Object} New selector dom class
    */
   parent() {
-    return new LoafDom(this.element.map(el => el.parentElement).filter(Boolean));
+    return new this.constructor(this.element.map(el => el.parentElement).filter(Boolean));
   }
 
   /**
@@ -341,7 +317,7 @@ class LoafDom {
         }
       }
     });
-    return new LoafDom(store);
+    return new this.constructor(store);
   }
 
   /**
@@ -357,60 +333,32 @@ class LoafDom {
     this.element.forEach(el => {
       store = _concat(store, _findInParent(selectParentEl, el));
     });
-    return new LoafDom(store);
+    return new this.constructor(store);
   }
 
   /**
    * It gives dynamic change.
    *
    * @static
-   * @param {Object} Change the key and value
-   * @param {Number} Time to change
-   * @param {Function} callback function
+   * @param {Object} Velocity Arguments
+   * @returns {Object} New class Loaf-DOM
    */
-  animate(option, duration, easing='easeOutSine', callback=null) {
-    const fps = 60;
-    const secDuration = duration / 1000;
+  animate(...attr) {
     this.element.forEach(el => {
-      const elementID = el.identificationNo;
-      animation[elementID] = animation[elementID] ? animation[elementID] : {};
-      for(let key in option) {
-        const checkTarget = (key === 'scrollLeft' || key === 'scrollTop');
-        const target = checkTarget ? el : el.style;
-        const start = parseInt(target[key]);
-        const variation = option[key] - start;
-        const finish = option[key];
-        let time = 0;
-        let position = start;
-        clearInterval(animation[elementID][key]);
-        animation[elementID][key] = setInterval(() => {
-          time += 1 / fps;
-          position = Easing[easing](time * 100 / secDuration, time, start, variation, secDuration);
-          if ((variation > 0 && position >= finish) || (variation < 0 && position <= finish)) {
-            clearInterval(animation[elementID][key]);
-            target[key] = checkTarget ? finish : finish + 'px';
-            if(callback) callback();
-            return;
-          }
-          target[key] = checkTarget ? position : position + 'px';
-        }, 1000 / fps);
-      }
+      velocity(el, ...attr);
     });
+    return this;
   }
 
   /**
    * Stops all animation effects on the selected element.
    *
    * @static
-   * @returns {Object} Class Loaf-DOM
+   * @returns {Object} New class Loaf-DOM
    */
   stop() {
     this.element.forEach(el => {
-      const elementID = el.identificationNo;
-      animation[elementID] = animation[elementID] ? animation[elementID] : {};
-      for(let key in animation[elementID]) {
-        clearInterval(animation[elementID][key]);
-      }
+      velocity(el, 'stop');
     });
     return this;
   }
@@ -422,7 +370,7 @@ class LoafDom {
    * @param {Function} add event name
    * @param {Function} callback function
    * @param {Object} Options
-   * @returns {Object} Class Loaf-DOM
+   * @returns {Object} New class Loaf-DOM
    */
   event(eventName, callback, options) {
     this.element.forEach(el => {
@@ -436,7 +384,7 @@ class LoafDom {
    *
    * @static
    * @param {Function} callback function
-   * @returns {Object} Class Loaf-DOM
+   * @returns {Object} New class Loaf-DOM
    */
   scroll(callback=null) {
     this.element.forEach(el => {
@@ -451,7 +399,7 @@ class LoafDom {
    *
    * @static
    * @param {Function} callback function
-   * @returns {Object} Class Loaf-DOM
+   * @returns {Object} New class Loaf-DOM
    */
   click(callback = null) {
     this.element.forEach(el => {
@@ -462,37 +410,11 @@ class LoafDom {
   }
 
   /**
-   * Register a click event that prevents short double clicks.
-   *
-   * @static
-   * @param {Function} callback function
-   * @returns {Object} Class Loaf-DOM
-   */
-  oneClick(callback = null) {
-    this.element.forEach(el => {
-      const elementID = el.identificationNo;
-      if(callback) {
-        el.addEventListener('click', () => {
-          if(lazyClick[elementID]) return;
-          lazyClick[elementID] = true;
-          setTimeout(() => {
-            lazyClick[elementID] = false;
-          }, 300);
-          callback();
-        });
-      } else {
-        el.click();
-      }
-    });
-    return this;
-  }
-
-  /**
    * Event trigger.
    *
    * @static
    * @param {String} Event name to run
-   * @returns {Object} Class Loaf-DOM
+   * @returns {Object} New class Loaf-DOM
    */
   trigger(eventName = null) {
     if(!eventName) return this;
@@ -518,7 +440,7 @@ class LoafDom {
    *
    * @static
    * @param {String|Function} set element width value
-   * @returns {Number|Object} The width value of the first element | Class Loaf-DOM
+   * @returns {Number|Object} The width value of the first element | New class Loaf-DOM
    */
   width(widthValue = null) {
     if(!widthValue) return _oneSelect(this).clientWidth;
@@ -531,7 +453,7 @@ class LoafDom {
    *
    * @static
    * @param {String|Function} set element height value
-   * @returns {Number|Object} The height value of the first element | Class Loaf-DOM
+   * @returns {Number|Object} The height value of the first element | New class Loaf-DOM
    */
   height(heightValue = null) {
     if(!heightValue) return _oneSelect(this).clientHeight;
@@ -544,7 +466,7 @@ class LoafDom {
    *
    * @static
    * @param {Number|Function} set element scroll top value
-   * @returns {Number|Object} The scroll position of the top of the element | Class Loaf-DOM
+   * @returns {Number|Object} The scroll position of the top of the element | New class Loaf-DOM
    */
   scrollTop(positionValue = null) {
     if(!positionValue) return _oneSelect(this).scrollTop;
@@ -557,7 +479,7 @@ class LoafDom {
    *
    * @static
    * @param {Number|Function} set element scroll left value
-   * @returns {Number|Object} The scroll position of the left of the element | Class Loaf-DOM
+   * @returns {Number|Object} The scroll position of the left of the element | New class Loaf-DOM
    */
   scrollLeft(positionValue = null) {
     if(!positionValue) return _oneSelect(this).scrollLeft;
@@ -590,7 +512,7 @@ class LoafDom {
    *
    * @static
    * @param {String} Html element
-   * @returns {String|Object} The html element or class Loaf-dom
+   * @returns {String|Object} The html element or New class Loaf-DOM
    */
   html(htmlValue = null) {
     if(!htmlValue) return _oneSelect(this).innerHTML;

@@ -80,22 +80,15 @@ console.log(L('p').el(1).innerText);
 // 'target2'
 ```
 
-## Use easing value in animation
-i use jQuery Easing as a plugin, and I can use some easing values. (default: easeOutSine)  
-(However, the animate function is still lacking.)
-```
-easeInQuad, easeOutQuad, easeInOutQuad, easeInCubic, easeOutCubic, easeInOutCubic, easeInQuart, easeOutQuart, easeInOutQuart, easeInQuint, easeOutQuint, easeInOutQuint, easeInSine, easeOutSine, easeInOutSine, easeInExpo, easeOutExpo, easeInOutExpo, easeInCirc, easeOutCirc, easeInOutCirc
-```
-
+## Use velocity.js library
+Use the Velocity.js library for high-performance animation.  
 ```js
 import L from 'loaf-dom';
 
-L('#animation').animate({left: 500}, 2000, 'easeInCubic', () => console.log('callback'));
+L('#animation').animate({left: 500}, 2000);
 ```
-
 #### Reference
-* [jQuery Easing Plugin](http://gsgd.co.uk/sandbox/jquery/easing/)
-* [Easing functions](https://easings.net/en)
+* [Velocity.js](http://velocityjs.org)
 
 ## All methods
 #### .el()
@@ -177,9 +170,6 @@ L('#wrap').scroll(() => console.log('scroll'));
 
 #### .click()
 Add a click event.
-
-#### .oneClick()
-Register a click event that prevents short double clicks.
 
 #### .trigger()
 Event trigger.

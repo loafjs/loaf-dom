@@ -1,6 +1,6 @@
 {
   "name": "loaf-dom",
-  "version": "0.2.8",
+  "version": "0.3.0",
   "description": "A light and fast DOM script library for front-end development",
   "main": "loaf-dom.js",
   "scripts": {
@@ -34,5 +34,8 @@
     "karma-jasmine": "^1.1.2",
     "karma-webpack": "^3.0.5",
     "webpack": "^4.17.2"
+  },
+  "dependencies": {
+    "velocity-animate": "^2.0.5"
   }
 }
