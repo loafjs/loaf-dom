@@ -239,6 +239,19 @@ class LoafDom {
   }
 
   /**
+   * Whether the selected element has a received class name
+   *
+   * @static
+   * @param {String} Class name
+   * @returns {Boolean} Whether you have the class
+   */
+  hasClass(className) {
+    const el = _oneSelect(this);
+    const baseClassName = _compactSplit(el.className, ' ');
+    return baseClassName.indexOf(className) !== -1;
+  }
+
+  /**
    * Invoke or set the property value
    *
    * @static

@@ -112,6 +112,9 @@ Add a class to the selected element.
 #### .removeClass()
 Clears the corresponding class of selector
 
+#### .hasClass()
+Whether the selected element has a received class name
+
 #### .attr()
 Invoke or set the property value
 ```
