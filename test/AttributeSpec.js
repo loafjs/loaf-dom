@@ -22,6 +22,12 @@ describe('Test DOM elements with selectors', () => {
     expect(domRemoveClassName).toEqual('');
   });
 
+  it('hasClass()', () => {
+    const className = 'add-class';
+    document.getElementById('wrap').className += 'add-class';
+    expect(L('#wrap').hasClass(className)).toEqual(true);
+  });
+
   it('get, set attr()', () => {
     const key = 'key';
     const value = 'value';
