@@ -83,3 +83,103 @@
 * Delete sample
 * Package cleanup
 
+### v0.1.1
+
+> 2018-10-19
+
+* Add method
+(trigger, offset, width, height, scrollTop, scrollLeft, scrollHeight, scrollWidth, html, text)
+
+### v0.1.0
+
+> 2018-10-16
+
+* init beta version
+
+### v0.0.19
+
+> 2018-10-15
+
+* add scroll()
+* add click()
+
+
+### v0.0.18
+
+> 2018-10-09
+
+* add animation test code
+
+
+### v0.0.17
+
+> 2018-10-03
+
+* Add annotation
+
+### v0.0.16
+
+> 2018-09-22
+
+* update unit test code
+* add children(), parents()
+* edit concat()
+
+### v0.0.14
+
+> 2018-09-20
+
+* add unit test code (Karma, Jasmine)
+
+### v0.0.13
+
+> 2018-09-19
+
+* add parent()
+* add prev(), next()
+
+### v0.0.11
+
+> 2018-09-14
+
+* add selector for inheritance element
+* modify a typo
+
+### v0.0.9
+
+> 2018-09-11
+
+* fix minimum node version 4.0.0 > 6.0.0
+* update readme
+* code cleanup
+
+### v0.0.7
+
+> 2018-09-09
+
+* aadd attr()
+* add style()
+* add multiple selectors
+
+### v0.0.4
+
+> 2018-09-07
+
+* add sample code
+* add selecter(tagName)
+* edit structure
+* modify a typo
+
+### v0.0.2
+
+> 2018-09-02
+
+* Add method
+(selecter, eq, addClass, removeClass, (roof))
+
+### v0.0.1
+
+> 2018-09-01
+
+* Start Project
+
