@@ -1,6 +1,6 @@
 {
   "name": "loaf-dom",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "A light and fast DOM script library for front-end development",
   "main": "loaf-dom.js",
   "scripts": {
