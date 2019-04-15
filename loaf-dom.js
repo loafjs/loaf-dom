@@ -35,7 +35,7 @@ const _concat = (beforeArr, afterArr) => {
  */
 const _select = (element) => {
   element = element.trim();
-  if(/\,|\>|:| /.test(element)) {
+  if(/[\,\>\: \]\=]/.test(element)) {
     if(!document.querySelectorAll(element).length) element = [];
     else element = _arrayElement([], document.querySelectorAll(element));
   } else {
@@ -162,7 +162,7 @@ const _union = (arr1, arr2) => {
 class LoafDom {
 
   constructor(element) {
-    this.version = '0.1.9';
+    this.version = '0.3.6';
     this.element = [];
     _selectElement(this, element);
     if(!this.element.length) _error(1, 'constructor()');

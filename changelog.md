@@ -1,5 +1,10 @@
 # Changelog
 
+### v0.3.6
+> 2019-04-15
+
+* Add Type Selector (ex. 'input[type=text]')
+
 ### v0.3.5
 > 2019-04-12
 
