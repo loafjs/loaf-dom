@@ -3,7 +3,7 @@ A light and fast DOM script library for front-end development.
 loaf-dom is written in ES6+ syntax. but many browsers do not yet support ES6+, so you have to use [Webpack](https://webpack.js.org/), [Babel](https://github.com/babel/babel) library.
 
 ## Notice
-This is unstable because it is an early version.  
+This is unstable because it is an early version.
 There are many disadvantages. I look forward to advice and code reviews. thank you.
 
 ## Install
@@ -97,7 +97,7 @@ Returns the Select the dom element
 // ex.
 import L from 'loaf-dom';
 
-L('#wrap').el(); 
+L('#wrap').el();
 // == document.getElementById('wrap');
 ```
 #### .length()
@@ -213,6 +213,9 @@ L('#wrap').html('<p>insert html</p>');
 
 #### .text()
 The text of the html element is imported or injected into the element.
+
+#### .removeAllChild()
+Remove all child elements.
 
 ## License
 [MIT](https://github.com/loafjs/loaf-dom/blob/master/LICENSE)

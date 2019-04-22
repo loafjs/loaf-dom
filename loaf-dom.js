@@ -160,7 +160,7 @@ function _union(arr1, arr2) {
 class LoafDom {
 
   constructor(element) {
-    this.version = '0.3.7';
+    this.version = '0.3.8';
     this.element = [];
     _selectElement.call(this, element);
     if(!this.element.length) return _error(1, 'constructor()');
