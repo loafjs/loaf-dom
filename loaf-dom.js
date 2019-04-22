@@ -5,7 +5,7 @@ import velocity from 'velocity-animate';
  *
  * @private
  */
-const _error = (type, method) => {
+function _error(type, method) {
   if(type === 1) console.warn(`No elements selected by ${method}`);
 };
 
@@ -18,7 +18,7 @@ const _error = (type, method) => {
  * @param {Array|Object} Element or array of elements
  * @returns {Array} Element selector array
  */
-const _concat = (beforeArr, afterArr) => {
+function _concat(beforeArr, afterArr) {
   afterArr = Array.prototype.concat.call([], afterArr);
   afterArr.forEach(el => {
     if(beforeArr.indexOf(el) === -1) beforeArr = Array.prototype.concat.call(beforeArr, el);
@@ -33,7 +33,7 @@ const _concat = (beforeArr, afterArr) => {
  * @param {String} Element selector
  * @returns {Object} Element selector
  */
-const _select = (element) => {
+function _select(element) {
   element = element.trim();
   if(/[\,\>\: \]\=]/.test(element)) {
     if(!document.querySelectorAll(element).length) element = [];
@@ -60,19 +60,17 @@ const _select = (element) => {
  * Put selected element in class.
  *
  * @private
- * @param {Object} Loaf-dom class
  * @param {String} Element selector
  */
-const _selectElement = (LD, element) => {
-
+function _selectElement(element) {
   if(element === window || element === document) {
-    LD.element = _arrayElement([], element);
+    this.element = _arrayElement([], element);
   } else if(typeof element === 'object') {
-    LD.element = element;
+    this.element = element;
   }
 
   if(typeof element === 'string') {
-    LD.element = _select(element);
+    this.element = _select(element);
   }
 };
 
@@ -84,7 +82,7 @@ const _selectElement = (LD, element) => {
  * @param {String} Element selector
  * @returns {Array} Element selector array
  */
-const _arrayElement = (store, element) => {
+function _arrayElement(store, element) {
   // const select = _select(element);
   if(!element) return store;
   if(!element.length) return _concat(store, element);
@@ -102,7 +100,7 @@ const _arrayElement = (store, element) => {
  * @param {Object} Child element
  * @returns {Array|Null} Returns the parent if there is a parent element, or null if there is no parent
  */
-const _findInParent = (parent, children) => {
+function _findInParent(parent, children) {
   let cacheParent = children.parentNode;
   while(cacheParent !== null) {
     if(parent.indexOf(cacheParent) !== -1) return cacheParent;
@@ -120,7 +118,7 @@ const _findInParent = (parent, children) => {
  * @param {Boolean} For Number, the default unit is px
  * @returns {String|Number} Final value
  */
-const _finishValue = (value, defaultPx=false) => {
+function _finishValue(value, defaultPx=false) {
   value = typeof value === 'function' ? value() : value;
   if(defaultPx) value = typeof value === 'number' ? value + 'px' : value;
   return value;
@@ -133,8 +131,8 @@ const _finishValue = (value, defaultPx=false) => {
  * @param {Object} Loaf-dom class
  * @returns {Object} First element selector
  */
- const _oneSelect = (LD) => {
-  return LD.element.length ? LD.element[0] : LD.element;
+ function _oneSelect() {
+  return this.element.length ? this.element[0] : this.element;
 };
 
 /**
@@ -145,7 +143,7 @@ const _finishValue = (value, defaultPx=false) => {
  * @param {String} String to divide
  * @returns {Array} Compact arrangement
  */
-const _compactSplit = (str, value) => {
+function _compactSplit(str, value) {
   return str.split(value).filter(Boolean);
 };
 
@@ -155,17 +153,17 @@ const _compactSplit = (str, value) => {
  * @private
  * @returns {Array} An array of unique values
  */
-const _union = (arr1, arr2) => {
+function _union(arr1, arr2) {
   return [...new Set([...arr1, ...arr2])];
 };
 
 class LoafDom {
 
   constructor(element) {
-    this.version = '0.3.6';
+    this.version = '0.3.7';
     this.element = [];
-    _selectElement(this, element);
-    if(!this.element.length) _error(1, 'constructor()');
+    _selectElement.call(this, element);
+    if(!this.element.length) return _error(1, 'constructor()');
 
     return this;
   }
@@ -201,7 +199,7 @@ class LoafDom {
    */
   eq(idx) {
     idx = typeof idx === 'number' ? idx : 0;
-    if(!this.element.length || typeof this.element[idx] === 'undefined') _error(1, 'eq()');
+    if(!this.element.length || typeof this.element[idx] === 'undefined') return _error(1, 'eq()');
     else this.element = [this.element[idx]];
     return this;
   }
@@ -214,7 +212,7 @@ class LoafDom {
    * @returns {Object} New class Loaf-DOM
    */
   addClass(...className) {
-    const el = _oneSelect(this);
+    const el = _oneSelect.call(this);
     const baseClassName = _compactSplit(el.className, ' ');
     const addClassNamee = [...className];
     el.className = _union(baseClassName, addClassNamee).join(' ');
@@ -246,7 +244,7 @@ class LoafDom {
    * @returns {Boolean} Whether you have the class
    */
   hasClass(className) {
-    const el = _oneSelect(this);
+    const el = _oneSelect.call(this);
     const baseClassName = _compactSplit(el.className, ' ');
     return baseClassName.indexOf(className) !== -1;
   }
@@ -260,8 +258,8 @@ class LoafDom {
    * @returns {Object|String} New class Loaf-DOM or Attribute Value
    */
   attr(key, value=null) {
-    if(!value) return _oneSelect(this).getAttribute(key);
-    _oneSelect(this).setAttribute(key, _finishValue(value));
+    if(!value) return _oneSelect.call(this).getAttribute(key);
+    _oneSelect.call(this).setAttribute(key, _finishValue(value));
     return this;
   }
 
@@ -274,7 +272,7 @@ class LoafDom {
    * @returns {Object|String} New class Loaf-DOM or Style Value
    */
   style(key, value=null) {
-    if(!value) return _oneSelect(this).style[key];
+    if(!value) return _oneSelect.call(this).style[key];
     this.element.forEach(el => el.style[key] = _finishValue(value, true));
     return this;
   }
@@ -444,7 +442,7 @@ class LoafDom {
    * @returns {Object} offset value
    */
   offset() {
-    const el = _oneSelect(this);
+    const el = _oneSelect.call(this);
     return { top: el.offsetTop, left: el.offsetLeft, width: el.offsetWidth, height: el.offsetHeight }
   }
 
@@ -456,7 +454,7 @@ class LoafDom {
    * @returns {Number|Object} The width value of the first element | New class Loaf-DOM
    */
   width(widthValue = null) {
-    if(!widthValue) return _oneSelect(this).clientWidth;
+    if(!widthValue) return _oneSelect.call(this).clientWidth;
     this.style('width', _finishValue(widthValue, true));
     return this;
   }
@@ -469,7 +467,7 @@ class LoafDom {
    * @returns {Number|Object} The height value of the first element | New class Loaf-DOM
    */
   height(heightValue = null) {
-    if(!heightValue) return _oneSelect(this).clientHeight;
+    if(!heightValue) return _oneSelect.call(this).clientHeight;
     this.style('height', _finishValue(heightValue, true));
     return this;
   }
@@ -482,8 +480,8 @@ class LoafDom {
    * @returns {Number|Object} The scroll position of the top of the element | New class Loaf-DOM
    */
   scrollTop(positionValue = null) {
-    if(!positionValue) return _oneSelect(this).scrollTop;
-    _oneSelect(this).scrollTop = _finishValue(positionValue);
+    if(!positionValue) return _oneSelect.call(this).scrollTop;
+    _oneSelect.call(this).scrollTop = _finishValue(positionValue);
     return this;
   }
 
@@ -495,8 +493,8 @@ class LoafDom {
    * @returns {Number|Object} The scroll position of the left of the element | New class Loaf-DOM
    */
   scrollLeft(positionValue = null) {
-    if(!positionValue) return _oneSelect(this).scrollLeft;
-    _oneSelect(this).scrollLeft = _finishValue(positionValue);
+    if(!positionValue) return _oneSelect.call(this).scrollLeft;
+    _oneSelect.call(this).scrollLeft = _finishValue(positionValue);
     return this;
   }
 
@@ -507,7 +505,7 @@ class LoafDom {
    * @returns {Number} The height value of the scroll
    */
   scrollHeight() {
-    return _oneSelect(this).scrollHeight;
+    return _oneSelect.call(this).scrollHeight;
   }
 
   /**
@@ -517,7 +515,7 @@ class LoafDom {
    * @returns {Number} The width value of the first element
    */
   scrollWidth() {
-    return _oneSelect(this).scrollWidth;
+    return _oneSelect.call(this).scrollWidth;
   }
 
   /**
@@ -528,7 +526,7 @@ class LoafDom {
    * @returns {String|Object} The html element or New class Loaf-DOM
    */
   html(htmlValue = null) {
-    if(!htmlValue) return _oneSelect(this).innerHTML;
+    if(!htmlValue) return _oneSelect.call(this).innerHTML;
     this.element.forEach(el => {
       el.innerHTML = _finishValue(htmlValue);
     });
@@ -543,13 +541,26 @@ class LoafDom {
    * @returns {String|Object} Text of html element or Loaf-dom class
    */
   text(textValue = null) {
-    if(!textValue) return _oneSelect(this).innerText;
+    if(!textValue) return _oneSelect.call(this).innerText;
     this.element.forEach(el => {
       el.innerText = _finishValue(textValue);
     });
     return this;
   }
 
+  /**
+   * Remove all child elements.
+   *
+   * @static
+   * @returns {Object} Loaf-dom class
+   */
+  removeAllChild() {
+    const el = _oneSelect.call(this);
+    while(el.firstChild) {
+      el.removeChild(el.firstChild);
+    }
+    return this;
+  }
 }
 
 export default (element) => {

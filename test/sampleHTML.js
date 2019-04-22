@@ -58,6 +58,19 @@ export default `
 					</section>
 				</div>
 			</secition>
+			<section>
+				<h1>section title 4</h1>
+				<div class="container">
+					<section>
+						<h2>remove test</h1>
+						<div class="content-box">
+							<div id="remove-container">
+								<p>test</p>
+								<p>test</p>
+							</div>
+						</div>
+					</section>
+				</div>			</section>
 		</main>
 		<footer>
 			<h2>footer</h2>

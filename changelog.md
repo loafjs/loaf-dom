@@ -1,5 +1,11 @@
 # Changelog
 
+### v0.3.7
+> 2019-04-22
+
+* Modifying private function calls
+* Add method removeAllChild
+
 ### v0.3.6
 > 2019-04-15
 
