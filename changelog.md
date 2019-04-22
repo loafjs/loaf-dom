@@ -1,6 +1,6 @@
 # Changelog
 
-### v0.3.7
+### [v0.3.7](https://github.com/loafjs/loaf-dom/releases/tag/v0.3.7)
 > 2019-04-22
 
 * Modifying private function calls
