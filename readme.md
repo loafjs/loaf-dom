@@ -16,18 +16,6 @@ npm install --save loaf-dom
 npm test
 ```
 
-## Example
-You can go to the 'example' directory, install the example source, and check the run.
-```
-cd ./example
-```
-```
-npm install
-```
-```
-npm start
-```
-
 ## Introduction
 ```html
 <body>
