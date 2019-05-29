@@ -10,13 +10,14 @@ describe('Test DOM elements with selectors', () => {
 
   it('addClass(), removeClass()', () => {
     const className = 'add-class';
+    const className2 = 'add-class2';
 
-  	L('#wrap').addClass(className);
+  	L('#wrap').addClass(className, className2);
   	const domAddClassName = document.getElementById('wrap').className;
 
-  	expect(domAddClassName).toEqual(className);
+  	expect(domAddClassName).toEqual(className + ' ' + className2);
 
-    L('#wrap').removeClass(className);
+    L('#wrap').removeClass(className, className2);
     const domRemoveClassName = document.getElementById('wrap').className;
 
     expect(domRemoveClassName).toEqual('');

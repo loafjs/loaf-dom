@@ -96,9 +96,23 @@ Select the element of the selector in that sequence.
 
 #### .addClass()
 Add a class to the selected element.
+```
+//ex.
+import L from 'loaf-dom';
+
+L('#wrap').addClass('class1', 'class2');
+// L('#wrap').el().className === 'class1 class2';
+```
 
 #### .removeClass()
 Clears the corresponding class of selector
+```
+//ex.
+import L from 'loaf-dom';
+
+L('#wrap').removeClass('class1', 'class2');
+// L('#wrap').el().className === '';
+```
 
 #### .hasClass()
 Whether the selected element has a received class name

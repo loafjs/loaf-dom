@@ -208,14 +208,12 @@ class LoafDom {
    * Add a class to the selected element.
    *
    * @static
-   * @param {Array} An array of class names
+   * @param {String} class names
    * @returns {Object} New class Loaf-DOM
    */
   addClass(...className) {
     const el = _oneSelect.call(this);
-    const baseClassName = _compactSplit(el.className, ' ');
-    const addClassNamee = [...className];
-    el.className = _union(baseClassName, addClassNamee).join(' ');
+    el.classList.add(...className);
     return this;
   }
 
@@ -223,15 +221,12 @@ class LoafDom {
    * Clears the corresponding class of selector
    *
    * @static
-   * @param {String} Class name
+   * @param {String} class names
    * @returns {Object} New class Loaf-DOM
    */
-  removeClass(className) {
-    const arrayClassName = _compactSplit(className, ' ');
+  removeClass(...className) {
     this.element.forEach((el) => {
-      el.className = _compactSplit(el.className, ' ')
-        .filter(str => arrayClassName.indexOf(str) === -1)
-        .join(' ');
+      el.classList.remove(...className);
     });
     return this;
   }
