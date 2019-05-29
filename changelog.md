@@ -1,6 +1,6 @@
 # Changelog
 
-### [v0.3.10]
+### [v0.3.10](https://github.com/loafjs/loaf-dom/releases/tag/v0.3.10)
 > 2019-05-29
 
 * Modify addClass, removeClass method
