@@ -1,5 +1,11 @@
 # Changelog
 
+### [v0.4.0](https://github.com/loafjs/loaf-dom/releases/tag/v0.4.0)
+> 2019-06-20
+
+* Delete Animate, stop method
+* Modifying the code structure
+
 ### [v0.3.10](https://github.com/loafjs/loaf-dom/releases/tag/v0.3.10)
 > 2019-05-29
 

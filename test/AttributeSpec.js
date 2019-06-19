@@ -1,4 +1,4 @@
-import L from '../loaf-dom';
+import L from '../src';
 import Mock from './sampleHTML';
 
 const newElement = document.createElement("div");

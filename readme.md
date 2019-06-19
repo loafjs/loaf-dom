@@ -68,16 +68,6 @@ console.log(L('p').el(1).innerText);
 // 'target2'
 ```
 
-## Use velocity.js library
-Used the Velocity.js library for high-performance animation. Please refer to the official website for the various settings and usage of Velocity.js
-```js
-import L from 'loaf-dom';
-
-L('#animation').animate({left: 500}, 2000);
-```
-#### Reference
-* [Velocity.js](http://velocityjs.org)
-
 ## All methods
 #### .el()
 Returns the Select the dom element
@@ -147,12 +137,6 @@ Select any of the child elements.
 
 #### .parents()
 Selecting an input element among the parent elements
-
-#### .animate()
-It gives dynamic change.
-
-#### .stop()
-Stops all animation effects on the selected element.
 
 #### .event()
 Add a event.
