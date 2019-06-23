@@ -112,7 +112,7 @@ class LoafDom {
    */
   style(key, value=null) {
     if(!value) return Util.oneSelect.call(this).style[key];
-    this.element.forEach(el => el.style[key] = Util.finishValue(value, true));
+    this.element.forEach(el => el.style[key] = Util.finishValue(value));
     return this;
   }
 
@@ -267,7 +267,7 @@ class LoafDom {
    */
   width(widthValue = null) {
     if(!widthValue) return Util.oneSelect.call(this).clientWidth;
-    this.style('width', Util.finishValue(widthValue, true));
+    this.style('width', Util.finishValue(widthValue));
     return this;
   }
 
@@ -280,7 +280,7 @@ class LoafDom {
    */
   height(heightValue = null) {
     if(!heightValue) return Util.oneSelect.call(this).clientHeight;
-    this.style('height', Util.finishValue(heightValue, true));
+    this.style('height', Util.finishValue(heightValue));
     return this;
   }
 
