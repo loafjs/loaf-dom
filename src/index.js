@@ -1,10 +1,14 @@
-import Util from './services/util'
-import Err from './services/error'
+import Easing from './services/easing';
+import Util from './services/util';
+import Err from './services/error';
+
+// Record the iteration of the animation.
+const animation = {};
 
 class LoafDom {
 
   constructor(element) {
-    this.version = '0.4.0';
+    this.version = '0.4.1';
     this.element = [];
     Util.selectElement.call(this, element);
     if(!this.element.length) return Err.warn(1, 'constructor()');
@@ -112,7 +116,7 @@ class LoafDom {
    */
   style(key, value=null) {
     if(!value) return Util.oneSelect.call(this).style[key];
-    this.element.forEach(el => el.style[key] = Util.finishValue(value));
+    this.element.forEach(el => el.style[key] = Util.finishValue(value, true));
     return this;
   }
 
@@ -267,7 +271,7 @@ class LoafDom {
    */
   width(widthValue = null) {
     if(!widthValue) return Util.oneSelect.call(this).clientWidth;
-    this.style('width', Util.finishValue(widthValue));
+    this.style('width', Util.finishValue(widthValue, true));
     return this;
   }
 
@@ -280,7 +284,7 @@ class LoafDom {
    */
   height(heightValue = null) {
     if(!heightValue) return Util.oneSelect.call(this).clientHeight;
-    this.style('height', Util.finishValue(heightValue));
+    this.style('height', Util.finishValue(heightValue, true));
     return this;
   }
 
@@ -371,6 +375,61 @@ class LoafDom {
     while(el.firstChild) {
       el.removeChild(el.firstChild);
     }
+    return this;
+  }
+
+  /**
+   * It gives dynamic change.
+   *
+   * @static
+   * @param {Object} Change the key and value
+   * @param {Number} Time to change
+   * @param {Function} callback function
+   */
+  animate(option, duration, easing='easeOutSine', callback=null) {
+    const fps = 60;
+    const secDuration = duration / 1000;
+    this.element.forEach(el => {
+      const elementID = el.identificationNo;
+      animation[elementID] = animation[elementID] ? animation[elementID] : {};
+      for(let key in option) {
+        const checkTarget = (key === 'scrollLeft' || key === 'scrollTop');
+        const target = checkTarget ? el : el.style;
+        const start = parseInt(target[key]);
+        const variation = option[key] - start;
+        const finish = option[key];
+        let time = 0;
+        let position = start;
+        clearInterval(animation[elementID][key]);
+        animation[elementID][key] = setInterval(() => {
+          time += 1 / fps;
+          position = Easing[easing](time * 100 / secDuration, time, start, variation, secDuration);
+          if ((variation > 0 && position >= finish) || (variation < 0 && position <= finish)) {
+            clearInterval(animation[elementID][key]);
+            target[key] = checkTarget ? finish : finish + 'px';
+            if(callback) callback();
+            return;
+          }
+          target[key] = checkTarget ? position : position + 'px';
+        }, 1000 / fps);
+      }
+    });
+  }
+
+  /**
+   * Stops all animation effects on the selected element.
+   *
+   * @static
+   * @returns {Object} Class Loaf-DOM
+   */
+  stop() {
+    this.element.forEach(el => {
+      const elementID = el.identificationNo;
+      animation[elementID] = animation[elementID] ? animation[elementID] : {};
+      for(let key in animation[elementID]) {
+        clearInterval(animation[elementID][key]);
+      }
+    });
     return this;
   }
 }

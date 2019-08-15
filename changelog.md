@@ -1,5 +1,10 @@
 # Changelog
 
+### [v0.4.1]
+> 2019-08-12
+
+* Add Animate, Stop method
+
 ### [v0.4.0](https://github.com/loafjs/loaf-dom/releases/tag/v0.4.0)
 > 2019-06-20
 
