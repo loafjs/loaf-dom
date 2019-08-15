@@ -203,5 +203,9 @@ The text of the html element is imported or injected into the element.
 #### .removeAllChild()
 Remove all child elements.
 
+#### .animate()
+// ex.
+$('#wrap').animate({ 'marginTop': 50 }, 3000, 'easeOutCubic');
+
 ## License
 [MIT](https://github.com/loafjs/loaf-dom/blob/master/LICENSE)
