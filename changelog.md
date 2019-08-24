@@ -1,6 +1,6 @@
 # Changelog
 
-### [v0.4.3]
+### [v0.4.4]
 > 2019-08-25
 
 * Add styles method

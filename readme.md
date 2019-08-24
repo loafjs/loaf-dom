@@ -123,6 +123,13 @@ console.log(L('#wrap').attr('set-attr'));
 #### .style()
 Gives or reads style attributes to the element.
 
+#### .styles()
+Gives various style attributes input as an object to the element.
+```
+// ex.
+L('#wrap').styles({ background: 'red', color: 'blue' });
+```
+
 #### .next()
 Selects the next element of the selected element.
 
