@@ -1,6 +1,6 @@
 # Changelog
 
-### [v0.4.4]
+### [v0.4.4](https://github.com/loafjs/loaf-dom/releases/tag/v0.4.4)
 > 2019-08-25
 
 * Add styles method
