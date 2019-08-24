@@ -61,6 +61,13 @@ describe('Test DOM elements with selectors', () => {
     expect(L('#wrap').style(key)).toEqual(value);
   });
 
+  it('set styles', () => {
+    L('#wrap').styles({background: 'red', color: 'blue'});
+
+    expect(L('#wrap').style('background')).toEqual('red');
+    expect(L('#wrap').style('color')).toEqual('blue');
+  });
+
   it('get, set text()', () => {
     const text = 'add text';
     L('h1').text(text);

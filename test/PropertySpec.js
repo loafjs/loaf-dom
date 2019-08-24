@@ -21,13 +21,7 @@ describe('Test DOM elements with selectors', () => {
     expect(L('#wrap').offset().right).toEqual(offsetRight);
   });
 
-  it('width()', () => {
-    const target = document.getElementById('wrap');
-
-    expect(L('#wrap').width()).toEqual(target.clientWidth);
-  });
-
-  it('set width()', () => {
+  it('set get  width()', () => {
     const target = document.getElementById('wrap');
     const width = '100px';
     L('#wrap').width(width);
@@ -35,7 +29,7 @@ describe('Test DOM elements with selectors', () => {
     expect(L('#wrap').width()).toEqual(target.clientWidth);
   });
 
-  it('set width() - function value', () => {
+  it('set get  width() - function value', () => {
     const target = document.getElementById('wrap');
     const width = '200px';
     L('#wrap').width(() => width);
@@ -43,41 +37,20 @@ describe('Test DOM elements with selectors', () => {
     expect(L('#wrap').width()).toEqual(target.clientWidth);
   });
 
-  it('set width() - number', () => {
-    const target = document.getElementById('wrap');
-    const width = 100;
-    L('#wrap').width(width);
-
-    expect(L('#wrap').width()).toEqual(target.clientWidth);
-  });
-
-  it('height()', () => {
-    const target = document.getElementById('wrap');
-
-    expect(L('#wrap').height()).toEqual(target.clientHeight);
-  });
-
-  it('set height()', () => {
+  it('set get height()', () => {
     const target = document.getElementById('wrap');
     const height = '100px';
-    L('#wrap').width(height);
+    L('#wrap').height(height);
+
     expect(L('#wrap').height()).toEqual(target.clientHeight);
   });
 
-  it('set height() - function value', () => {
+  it('set get height() - function value', () => {
     const target = document.getElementById('wrap');
     const height = '200px';
     L('#wrap').height(() => height);
 
     expect(L('#wrap').height()).toEqual(target.clientHeight);
-  });
-
-  it('set height() - Number', () => {
-    const target = document.getElementById('wrap');
-    const height = 100;
-    L('#wrap').height(height);
-
-    expect(L('#wrap').height()).toEqual(height);
   });
 
   it('scrollTop()', () => {
