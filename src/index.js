@@ -121,6 +121,23 @@ class LoafDom {
   }
 
   /**
+   * Gives various style attributes input as an object to the element.
+   *
+   * @static
+   * @param {Object} Style Object for Key Value
+   * @returns {Object} New class Loaf-DOM
+   */
+  styles(styleset) {
+    if(typeof styleset !== 'object') return;
+    this.element.forEach(el => {
+      for(const key in styleset) {
+        el.style[key] = Util.finishValue(styleset[key]);
+      }
+    });
+    return this;
+  }
+
+  /**
    * Selects the next element of the selected element.
    *
    * @static

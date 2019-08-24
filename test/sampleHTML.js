@@ -70,7 +70,8 @@ export default `
 							</div>
 						</div>
 					</section>
-				</div>			</section>
+				</div>			
+			</section>
 		</main>
 		<footer>
 			<h2>footer</h2>
