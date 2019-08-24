@@ -113,12 +113,10 @@ class Util {
    *
    * @private
    * @param {String|Number|Function} Value or response value
-   * @param {Boolean} For Number, the default unit is px
    * @returns {String|Number} Final value
    */
-  static finishValue(value, defaultPx=false) {
+  static finishValue(value) {
     value = typeof value === 'function' ? value() : value;
-    if(defaultPx) value = typeof value === 'number' ? value + 'px' : value;
     return value;
   }
 

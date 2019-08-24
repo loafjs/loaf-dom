@@ -4,7 +4,7 @@
   "description": "A light and fast DOM script library for front-end development",
   "main": "src/index.js",
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start",
+    "test": "./node_modules/karma/bin/karma start"
   },
   "repository": {
     "type": "git",
