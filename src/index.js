@@ -101,7 +101,7 @@ class LoafDom {
    * @returns {Object|String} New class Loaf-DOM or Attribute Value
    */
   attr(key, value=null) {
-    if(!value) return Util.oneSelect.call(this).getAttribute(key);
+    if(value === null) return Util.oneSelect.call(this).getAttribute(key);
     Util.oneSelect.call(this).setAttribute(key, Util.finishValue(value));
     return this;
   }
@@ -115,8 +115,8 @@ class LoafDom {
    * @returns {Object|String} New class Loaf-DOM or Style Value
    */
   style(key, value=null) {
-    if(!value) return Util.oneSelect.call(this).style[key];
-    this.element.forEach(el => el.style[key] = Util.finishValue(value, true));
+    if(value === null) return Util.oneSelect.call(this).style[key];
+    this.element.forEach(el => el.style[key] = Util.finishValue(value));
     return this;
   }
 
@@ -213,9 +213,9 @@ class LoafDom {
    * @param {Function} callback function
    * @returns {Object} New class Loaf-DOM
    */
-  scroll(callback=null) {
+  scroll(callback) {
     this.element.forEach(el => {
-      if(callback) el.addEventListener('scroll', callback);
+      if(typeof callback === 'function') el.addEventListener('scroll', callback);
       else el.scroll();
     });
     return this;
@@ -228,9 +228,9 @@ class LoafDom {
    * @param {Function} callback function
    * @returns {Object} New class Loaf-DOM
    */
-  click(callback = null) {
+  click(callback) {
     this.element.forEach(el => {
-      if(callback) el.addEventListener('click', callback);
+      if(typeof callback === 'function') el.addEventListener('click', callback);
       else el.click();
     });
     return this;
@@ -243,10 +243,10 @@ class LoafDom {
    * @param {String} Event name to run
    * @returns {Object} New class Loaf-DOM
    */
-  trigger(eventName = null) {
-    if(!eventName) return this;
+  trigger(eventName=null) {
+    if(eventName === null) return this;
     this.element.forEach(el => {
-      if(typeof el[eventName] !== 'undefined') el[eventName]();
+      if(typeof el[eventName] === 'function') el[eventName]();
     });
     return this;
   }
@@ -269,9 +269,9 @@ class LoafDom {
    * @param {String|Function} set element width value
    * @returns {Number|Object} The width value of the first element | New class Loaf-DOM
    */
-  width(widthValue = null) {
-    if(!widthValue) return Util.oneSelect.call(this).clientWidth;
-    this.style('width', Util.finishValue(widthValue, true));
+  width(widthValue=null) {
+    if(widthValue === null) return Util.oneSelect.call(this).clientWidth;
+    this.style('width', Util.finishValue(widthValue));
     return this;
   }
 
@@ -282,9 +282,9 @@ class LoafDom {
    * @param {String|Function} set element height value
    * @returns {Number|Object} The height value of the first element | New class Loaf-DOM
    */
-  height(heightValue = null) {
-    if(!heightValue) return Util.oneSelect.call(this).clientHeight;
-    this.style('height', Util.finishValue(heightValue, true));
+  height(heightValue=null) {
+    if(heightValue === null) return Util.oneSelect.call(this).clientHeight;
+    this.style('height', Util.finishValue(heightValue));
     return this;
   }
 
@@ -295,8 +295,8 @@ class LoafDom {
    * @param {Number|Function} set element scroll top value
    * @returns {Number|Object} The scroll position of the top of the element | New class Loaf-DOM
    */
-  scrollTop(positionValue = null) {
-    if(!positionValue) return Util.oneSelect.call(this).scrollTop;
+  scrollTop(positionValue=null) {
+    if(positionValue === null) return Util.oneSelect.call(this).scrollTop;
     Util.oneSelect.call(this).scrollTop = Util.finishValue(positionValue);
     return this;
   }
@@ -308,8 +308,8 @@ class LoafDom {
    * @param {Number|Function} set element scroll left value
    * @returns {Number|Object} The scroll position of the left of the element | New class Loaf-DOM
    */
-  scrollLeft(positionValue = null) {
-    if(!positionValue) return Util.oneSelect.call(this).scrollLeft;
+  scrollLeft(positionValue=null) {
+    if(positionValue === null) return Util.oneSelect.call(this).scrollLeft;
     Util.oneSelect.call(this).scrollLeft = Util.finishValue(positionValue);
     return this;
   }
@@ -341,8 +341,8 @@ class LoafDom {
    * @param {String} Html element
    * @returns {String|Object} The html element or New class Loaf-DOM
    */
-  html(htmlValue = null) {
-    if(!htmlValue) return Util.oneSelect.call(this).innerHTML;
+  html(htmlValue=null) {
+    if(htmlValue === null) return Util.oneSelect.call(this).innerHTML;
     this.element.forEach(el => {
       el.innerHTML = Util.finishValue(htmlValue);
     });
@@ -356,8 +356,8 @@ class LoafDom {
    * @param {String} Html element
    * @returns {String|Object} Text of html element or Loaf-dom class
    */
-  text(textValue = null) {
-    if(!textValue) return Util.oneSelect.call(this).innerText;
+  text(textValue=null) {
+    if(textValue === null) return Util.oneSelect.call(this).innerText;
     this.element.forEach(el => {
       el.innerText = Util.finishValue(textValue);
     });

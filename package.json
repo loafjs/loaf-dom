@@ -1,36 +1,21 @@
 {
-  "_from": "loaf-dom@^0.4.1",
-  "_id": "loaf-dom@0.4.1",
-  "_inBundle": false,
-  "_integrity": "sha512-qofm5okBZCeZbecNE0vVIQMi/o+9taoOx/vRJlIG+CRVIy60APgbFyLdq4etKu5MrqJ8Q3AJxYnRJAnEudeYoA==",
-  "_location": "/loaf-dom",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "range",
-    "registry": true,
-    "raw": "loaf-dom@^0.4.1",
-    "name": "loaf-dom",
-    "escapedName": "loaf-dom",
-    "rawSpec": "^0.4.1",
-    "saveSpec": null,
-    "fetchSpec": "^0.4.1"
+  "name": "loaf-dom",
+  "version": "0.4.2",
+  "description": "A light and fast DOM script library for front-end development",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "./node_modules/karma/bin/karma start"
   },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/loaf-dom/-/loaf-dom-0.4.1.tgz",
-  "_shasum": "f2b736fd82168e3d40f731f1c943559c86e6c08d",
-  "_spec": "loaf-dom@^0.4.1",
-  "_where": "/Users/Falsy/Documents/CLiP-Webview-RF",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loafjs/loaf-dom.git"
+  },
   "author": {
     "name": "falsy"
   },
   "bugs": {
     "url": "https://github.com/loafjs/loaf-dom/issues"
   },
-  "bundleDependencies": false,
-  "deprecated": false,
-  "description": "A light and fast DOM script library for front-end development",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -53,15 +38,5 @@
     "library",
     "front-end"
   ],
-  "license": "MIT",
-  "main": "src/index.js",
-  "name": "loaf-dom",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/loafjs/loaf-dom.git"
-  },
-  "scripts": {
-    "test": "./node_modules/karma/bin/karma start"
-  },
-  "version": "0.4.1"
+  "license": "MIT"
 }
