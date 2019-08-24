@@ -5,13 +5,13 @@
 
 * Add styles method
 
-### [v0.4.2]
+### v0.4.2
 > 2019-08-24
 
 * Fix error when entering 0 value
 * Unset default px units
 
-### [v0.4.1]
+### v0.4.1
 > 2019-08-12
 
 * Add Animate, Stop method
