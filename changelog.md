@@ -1,5 +1,11 @@
 # Changelog
 
+### v0.4.5
+> 2019-12-12
+
+* Add forEach method
+
+
 ### [v0.4.4](https://github.com/loafjs/loaf-dom/releases/tag/v0.4.4)
 > 2019-08-25
 

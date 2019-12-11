@@ -71,7 +71,7 @@ console.log(L('p').el(1).innerText);
 ## All methods
 #### .el()
 Returns the Select the dom element
-```
+```js
 // ex.
 import L from 'loaf-dom';
 
@@ -86,22 +86,22 @@ Select the element of the selector in that sequence.
 
 #### .addClass()
 Add a class to the selected element.
-```
+```js
 //ex.
 import L from 'loaf-dom';
 
 L('#wrap').addClass('class1', 'class2');
-// L('#wrap').el().className === 'class1 class2';
+// L('#wrap').el().className = 'class1 class2';
 ```
 
 #### .removeClass()
 Clears the corresponding class of selector
-```
+```js
 //ex.
 import L from 'loaf-dom';
 
 L('#wrap').removeClass('class1', 'class2');
-// L('#wrap').el().className === '';
+// L('#wrap').el().className = '';
 ```
 
 #### .hasClass()
@@ -109,7 +109,7 @@ Whether the selected element has a received class name
 
 #### .attr()
 Invoke or set the property value
-```
+```js
 // ex.
 import L from 'loaf-dom';
 
@@ -125,7 +125,7 @@ Gives or reads style attributes to the element.
 
 #### .styles()
 Gives various style attributes input as an object to the element.
-```
+```js
 // ex.
 L('#wrap').styles({ background: 'red', color: 'blue' });
 ```
@@ -147,7 +147,7 @@ Selecting an input element among the parent elements
 
 #### .event()
 Add a event.
-```
+```js
 // ex.
 import L from 'loaf-dom';
 
@@ -156,7 +156,7 @@ L('#wrap').event('click', () => console.log('click'));
 ```
 #### .scroll()
 Add a scroll event.
-```
+```js
 // ex.
 import L from 'loaf-dom';
 
@@ -172,7 +172,7 @@ Event trigger.
 
 #### .offset()
 Returns the offset value.
-```
+```js
 // {top: 0, right: 0, bottom: 0, left: 0}
 ```
 
@@ -196,7 +196,7 @@ Returns the width value of the scroll.
 
 #### .html()
 The html element is imported or injected into the element.
-```
+```js
 // ex.
 import L from 'loaf-dom';
 
@@ -212,7 +212,17 @@ Remove all child elements.
 
 #### .animate()
 // ex.
+```js
 $('#wrap').animate({ 'marginTop': 50 }, 3000, 'easeOutCubic');
+```
+
+#### .forEach()
+// ex.
+```js
+$('.box').forEach(target => {
+  console.log(target.width());
+});
+```
 
 ## License
 [MIT](https://github.com/loafjs/loaf-dom/blob/master/LICENSE)

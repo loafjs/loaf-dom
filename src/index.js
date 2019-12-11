@@ -8,7 +8,7 @@ const animation = {};
 class LoafDom {
 
   constructor(element) {
-    this.version = '0.4.1';
+    this.version = '0.4.5';
     this.element = [];
     Util.selectElement.call(this, element);
     if(!this.element.length) return Err.warn(1, 'constructor()');
@@ -449,6 +449,20 @@ class LoafDom {
     });
     return this;
   }
+
+  /**
+   * Iterates through the selected elements to perform callbacks.
+   *
+   * @static
+   * @returns {Object} Class Loaf-DOM
+   */
+  forEach(callback) {
+    this.element.forEach(el => {
+      callback(new LoafDom([el]));
+    });
+    return this;
+  }
+}
 }
 
 export default (element) => {
