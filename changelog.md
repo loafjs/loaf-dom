@@ -1,6 +1,6 @@
 # Changelog
 
-### v0.4.5
+### v0.4.6
 > 2019-12-12
 
 * Add forEach method
