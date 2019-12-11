@@ -211,14 +211,14 @@ The text of the html element is imported or injected into the element.
 Remove all child elements.
 
 #### .animate()
-// ex.
 ```js
+// ex.
 $('#wrap').animate({ 'marginTop': 50 }, 3000, 'easeOutCubic');
 ```
 
 #### .forEach()
-// ex.
 ```js
+// ex.
 $('.box').forEach(target => {
   console.log(target.width());
 });
