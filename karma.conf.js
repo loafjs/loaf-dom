@@ -1,6 +1,5 @@
 // Karma configuration
 // Generated on Thu Sep 20 2018 02:29:42 GMT+0900 (KST)
-
 module.exports = function(config) {
   config.set({
     basePath: '',
@@ -8,25 +7,20 @@ module.exports = function(config) {
     webpack: {
         mode: 'development',
         module: {
-            rules: [{
-              test: /\.js?$/,
-              loader: 'babel-loader',
-              options: {
-                presets: ['env']
-              },
-              exclude: ['/node_modules']
-            }]
+          rules: [
+            { test: /\.js$/, use: "babel-loader" }
+          ]
         }
     },
     files: [
       'test/**Spec.js',
-      'loaf-dom.js'
+      'src/index.js'
     ],
     exclude: [
     ],
     preprocessors: {
       'test/**Spec.js': ['webpack'],
-      'loaf-dom.js': ['webpack']
+      'src/index.js': ['webpack']
     },
     reporters: ['progress'],
     port: 9876,

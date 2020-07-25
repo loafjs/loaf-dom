@@ -8,7 +8,7 @@ const animation = {};
 class LoafDom {
 
   constructor(element) {
-    this.version = '0.4.6';
+    this.version = '0.5.0';
     this.element = [];
     Util.selectElement.call(this, element);
     if(!this.element.length) return Err.warn(1, 'constructor()');

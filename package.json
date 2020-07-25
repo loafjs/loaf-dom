@@ -1,10 +1,11 @@
 {
   "name": "loaf-dom",
-  "version": "0.4.6",
-  "description": "A light and fast DOM script library for front-end development",
-  "main": "src/index.js",
+  "version": "0.5.0",
+  "description": "Light and fast DOM script library for front end development.",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start"
+    "test": "./node_modules/karma/bin/karma start",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -17,16 +18,19 @@
     "url": "https://github.com/loafjs/loaf-dom/issues"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.7.0",
+    "@babel/core": "^7.10.5",
+    "@babel/plugin-transform-runtime": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/runtime-corejs3": "^7.10.5",
+    "babel-loader": "^8.1.0",
     "jasmine": "^2.99.0",
-    "jasmine-core": "^2.99.0",
-    "karma": "^3.0.0",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-jasmine": "^1.1.2",
-    "karma-webpack": "^3.0.5",
-    "webpack": "^4.17.2"
+    "jasmine-core": "^2.99.1",
+    "karma": "^5.1.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-jasmine": "^3.3.1",
+    "karma-webpack": "^4.0.2",
+    "webpack": "^4.44.0",
+    "webpack-cli": "^3.3.12"
   },
   "engines": {
     "node": ">=6.0.0"
@@ -38,5 +42,6 @@
     "library",
     "front-end"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {}
 }

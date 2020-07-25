@@ -1,10 +1,5 @@
 # Loaf-DOM [![npm](https://img.shields.io/npm/v/loaf-dom.svg)](https://www.npmjs.com/package/loaf-dom) [![npm](https://img.shields.io/npm/dm/loaf-dom.svg)](https://www.npmjs.com/package/loaf-dom)
-A light and fast DOM script library for front-end development.
-loaf-dom is written in ES6+ syntax. but many browsers do not yet support ES6+, so you have to use [Webpack](https://webpack.js.org/), [Babel](https://github.com/babel/babel) library.
-
-## Notice
-This is unstable because it is an early version.
-There are many disadvantages. I look forward to advice and code reviews. thank you.
+Light and fast DOM script library for front end development.
 
 ## Install
 ```
@@ -26,10 +21,10 @@ npm test
 ```
 
 ```js
-import L from 'loaf-dom';
+import $ from 'loaf-dom';
 
-L('#wrap').addClass('show');
-L('p').style('color', 'red');
+$('#wrap').addClass('show');
+$('p').style('color', 'red');
 ```
 
 if you run the above method after all of dom is loaded, you can see the following results.
@@ -45,9 +40,9 @@ if you run the above method after all of dom is loaded, you can see the followin
 ## Using the default dom property
 you can use the el() method to select the element to use the default properties.
 ```js
-import L from 'loaf-dom';
+import $ from 'loaf-dom';
 
-console.log(L('#wrap').el().hidden);
+console.log($('#wrap').el().hidden);
 // false
 ```
 
@@ -62,9 +57,9 @@ if more than one selector is selected, the first is the default and you can sele
 ```
 
 ```js
-import L from 'loaf-dom';
+import $ from 'loaf-dom';
 
-console.log(L('p').el(1).innerText);
+console.log($('p').el(1).innerText);
 // 'target2'
 ```
 
@@ -73,9 +68,9 @@ console.log(L('p').el(1).innerText);
 Returns the Select the dom element
 ```js
 // ex.
-import L from 'loaf-dom';
+import $ from 'loaf-dom';
 
-L('#wrap').el();
+$('#wrap').el();
 // == document.getElementById('wrap');
 ```
 #### .length()
@@ -98,9 +93,9 @@ L('#wrap').addClass('class1', 'class2');
 Clears the corresponding class of selector
 ```js
 //ex.
-import L from 'loaf-dom';
+import $ from 'loaf-dom';
 
-L('#wrap').removeClass('class1', 'class2');
+$('#wrap').removeClass('class1', 'class2');
 // L('#wrap').el().className = '';
 ```
 
@@ -111,10 +106,10 @@ Whether the selected element has a received class name
 Invoke or set the property value
 ```js
 // ex.
-import L from 'loaf-dom';
+import $ from 'loaf-dom';
 
 // set
-L('#wrap').attr('set-attr', 'attr-value');
+$('#wrap').attr('set-attr', 'attr-value');
 // invoke
 console.log(L('#wrap').attr('set-attr'));
 // 'attr-value'
@@ -127,7 +122,9 @@ Gives or reads style attributes to the element.
 Gives various style attributes input as an object to the element.
 ```js
 // ex.
-L('#wrap').styles({ background: 'red', color: 'blue' });
+import $ from 'loaf-dom';
+
+$('#wrap').styles({ background: 'red', color: 'blue' });
 ```
 
 #### .next()
@@ -149,18 +146,18 @@ Selecting an input element among the parent elements
 Add a event.
 ```js
 // ex.
-import L from 'loaf-dom';
+import $ from 'loaf-dom';
 
-L('#wrap').event('click', () => console.log('click'));
+$('#wrap').event('click', () => console.log('click'));
 // == document.getElementById('wrap').addEventListener('click', () => console.log('click'));
 ```
 #### .scroll()
 Add a scroll event.
 ```js
 // ex.
-import L from 'loaf-dom';
+import $ from 'loaf-dom';
 
-L('#wrap').scroll(() => console.log('scroll'));
+$'#wrap').scroll(() => console.log('scroll'));
 // == document.getElementById('wrap').addEventListener('scroll', () => console.log('scroll'));
 ```
 
@@ -198,9 +195,9 @@ Returns the width value of the scroll.
 The html element is imported or injected into the element.
 ```js
 // ex.
-import L from 'loaf-dom';
+import $ from 'loaf-dom';
 
-L('#wrap').html('<p>insert html</p>');
+$('#wrap').html('<p>insert html</p>');
 // == document.getElementById('wrap').innerHTML = '<p>insert html</p>';
 ```
 
@@ -213,12 +210,16 @@ Remove all child elements.
 #### .animate()
 ```js
 // ex.
+import $ from 'loaf-dom';
+
 $('#wrap').animate({ 'marginTop': 50 }, 3000, 'easeOutCubic');
 ```
 
 #### .forEach()
 ```js
 // ex.
+import $ from 'loaf-dom';
+
 $('.box').forEach(target => {
   console.log(target.width());
 });
