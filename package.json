@@ -1,11 +1,11 @@
 {
   "name": "loaf-dom",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Light and fast DOM script library for front end development.",
   "main": "dist/index.js",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start",
-    "build": "webpack"
+    "babel": "babel ./src --out-dir ./dist"
   },
   "repository": {
     "type": "git",
@@ -18,10 +18,9 @@
     "url": "https://github.com/loafjs/loaf-dom/issues"
   },
   "devDependencies": {
+    "@babel/cli": "^7.11.6",
     "@babel/core": "^7.10.5",
-    "@babel/plugin-transform-runtime": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
-    "@babel/runtime-corejs3": "^7.10.5",
     "babel-loader": "^8.1.0",
     "jasmine": "^2.99.0",
     "jasmine-core": "^2.99.1",
@@ -29,8 +28,7 @@
     "karma-chrome-launcher": "^3.1.0",
     "karma-jasmine": "^3.3.1",
     "karma-webpack": "^4.0.2",
-    "webpack": "^4.44.0",
-    "webpack-cli": "^3.3.12"
+    "webpack": "^4.44.0"
   },
   "engines": {
     "node": ">=6.0.0"

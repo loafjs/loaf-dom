@@ -1,5 +1,10 @@
 # Changelog
 
+### v0.5.1
+> 2020-09-04
+
+* Edit compile error
+
 ### v0.5.0
 > 2020-07-25
 
